@@ -66,7 +66,8 @@ public class Pacman {
      */
     public static void runGame() {
         int ticksPerSec = 10;
-        long tickGap = (1L / 10) * 1000; // time in milliseconds
+        long tickGap = 1000L / ticksPerSec; // time in milliseconds
+        System.out.println(tickGap);
         
         running = true;
         long lastTick = 0;
@@ -81,7 +82,7 @@ public class Pacman {
     public static void main(String[] args) {
         //initBoard()
         System.out.println("Test");
-        System.out.println("Commit test");
+        System.out.println("Commmit Test");
     }
 
 }
