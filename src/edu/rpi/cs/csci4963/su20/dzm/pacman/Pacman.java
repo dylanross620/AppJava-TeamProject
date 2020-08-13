@@ -2,7 +2,8 @@ package edu.rpi.cs.csci4963.su20.dzm.pacman;
 
 public class Pacman {
 
-    private static Tile[][] board = new Tile[36][28];
+    private static Tile[][] board;
+    private static boolean running;
 
     /**
      * Sets a target tile in the board to a specified type.
@@ -49,11 +50,36 @@ public class Pacman {
     }
 
     private static void initBoard() {
+        board  = new Tile[36][28];
+
         //TODO
         throw new RuntimeException();
     }
 
+    private static void tick() {
+        //TODO
+        throw new RuntimeException();
+    }
+
+    /**
+     * Method to call in order to begin the game loop
+     */
+    public static void runGame() {
+        int ticksPerSec = 10;
+        long tickGap = (1L / 10) * 1000; // time in milliseconds
+        
+        running = true;
+        long lastTick = 0;
+        while (running) {
+            if (System.currentTimeMillis() - lastTick >= tickGap) {
+                lastTick = System.currentTimeMillis();
+                tick();
+            }
+        }
+    }
+
     public static void main(String[] args) {
+        //initBoard()
         System.out.println("Test");
     }
 
