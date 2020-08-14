@@ -1,7 +1,8 @@
 package edu.rpi.cs.csci4963.su20.dzm.pacman;
 
 /*
- *  This is a class represent the coordinate in the Pacman board
+ *  This is a class represent the coordinates in the Pacman board
+ *
  *
  */
 
