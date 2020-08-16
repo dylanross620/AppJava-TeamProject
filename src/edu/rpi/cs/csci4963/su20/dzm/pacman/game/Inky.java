@@ -5,13 +5,17 @@ import edu.rpi.cs.csci4963.su20.dzm.pacman.Pacman;
 public class Inky extends Ghost {
 
     private final Point scatterTarget = new Point(35, 27);
+    private Point startPos;
 
     public Inky(Point startPos) {
         super(startPos, true);
+        this.startPos = startPos;
     }
 
     @Override
     protected Point getTarget() {
+        if (Pacman.getPlayerScore() < 30)
+            return startPos;
         if (curMode == GhostMode.SCATTER)
             return scatterTarget;
         

@@ -9,7 +9,8 @@ public abstract class Ghost {
 
     protected int moveGap;
     private int tickCounter;
-    private Point curPos, prevPos;
+    protected Point curPos;
+    private Point prevPos;
     protected GhostMode curMode;
     private boolean leftHouse;
 

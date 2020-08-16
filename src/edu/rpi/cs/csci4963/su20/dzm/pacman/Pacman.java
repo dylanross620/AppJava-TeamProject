@@ -76,6 +76,24 @@ public class Pacman {
     }
 
     /**
+     * Get the player's current score
+     * @return the current score of the player
+     */
+    public static int getPlayerScore() {
+        //TODO
+        throw new RuntimeException();
+    }
+
+    /**
+     * Get the maximum score achievable in the level
+     * @return the maximum possible score
+     */
+    public static int getMaxScore() {
+        //TODO
+        throw new RuntimeException();
+    }
+
+    /**
      * Get a copy of Blinky's current position
      * @return the current position of Blinky
      */
