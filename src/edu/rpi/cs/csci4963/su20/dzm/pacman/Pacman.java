@@ -1,5 +1,7 @@
 package edu.rpi.cs.csci4963.su20.dzm.pacman;
 
+import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Point;
+
 public class Pacman {
 
     private static Tile[][] board;
@@ -49,6 +51,34 @@ public class Pacman {
         return !(t == Tile.WALL || (t == Tile.GHOST_HOUSE && leftHouse));
     }
 
+    /**
+     * Get a copy of the player's current position
+     * @return the current position of the player
+     */
+    public static Point getPlayerPos() {
+        //TODO
+        throw new RuntimeException();
+    }
+
+    /**
+     * Get a copy of the current direction of the player
+     * A point can also be used to represent a 2D vector
+     * @return the player's current direction
+     */
+    public static Point getPlayerDir() {
+        //TODO
+        throw new RuntimeException();
+    }
+
+    /**
+     * Get a copy of Blinky's current position
+     * @return the current position of Blinky
+     */
+    public static Point getBlinkyPos() {
+        //TODO
+        throw new RuntimeException();
+    }
+
     private static void initBoard() {
         board  = new Tile[36][28];
 
@@ -65,9 +95,8 @@ public class Pacman {
      * Method to call in order to begin the game loop
      */
     public static void runGame() {
-        int ticksPerSec = 10;
+        int ticksPerSec = 60;
         long tickGap = 1000L / ticksPerSec; // time in milliseconds
-        System.out.println(tickGap);
         
         running = true;
         long lastTick = 0;
