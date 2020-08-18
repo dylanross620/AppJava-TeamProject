@@ -1,5 +1,3 @@
-package edu.rpi.cs.csci4963.su20.dzm.pacman;
-
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import java.awt.BasicStroke;
@@ -36,58 +34,57 @@ public class GUI extends JPanel implements ActionListener {
     private final int BLOCK_SIZE = 24;
     private final int N_BLOCKS = 15;
     private final int SCREEN_SIZE = N_BLOCKS * BLOCK_SIZE;
-    private final int PACMAN_SPEED = 6;
 
-    private int N_GHOSTS = 6;
+    private int N_GHOSTS = 3;
     private int pacsLeft, score;
-
     private Image ghost;
     private Image pacmanImage;
 
-    private int pacman_x, pacman_y, pacmand_x, pacmand_y;
-
-    private final short levelData[] = {
-        19, 26, 26, 26, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 22,
-        21,  0,  0,  0, 17, 16, 16, 16, 16, 24, 24, 24, 16, 16, 20,
-        21,  0,  0,  0, 17, 16, 16, 16, 20,  0,  0,  0, 17, 16, 20,
-        21,  0,  0,  0, 17, 16, 16, 24, 16, 18, 18, 18, 16, 16, 20,
-        17, 18, 18, 18, 16, 16, 20,  0, 17, 16, 16, 16, 16, 16, 20,
-        17, 16, 16, 16, 16, 16, 20,  0, 17, 16, 16, 16, 16, 24, 20,
-        25, 16, 16, 16, 24, 24, 28,  0, 25, 24, 24, 16, 20,  0, 21,
-         1, 17, 16, 20,  0,  0,  0,  0,  0,  0,  0, 17, 20,  0, 21,
-         1, 17, 16, 16, 18, 18, 22,  0, 19, 18, 18, 16, 20,  0, 21,
-         1, 17, 16, 16, 16, 16, 20,  0, 17, 16, 16, 16, 20,  0, 21,
-         1, 17, 16, 16, 16, 16, 20,  0, 17, 16, 16, 16, 20,  0, 21,
-         1, 17, 16, 16, 16, 16, 16, 18, 16, 16, 16, 16, 20,  0, 21,
-         1, 17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 20,  0, 21,
-         1, 17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 18, 20,
-         9, 25, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 28
+    private final short levelData[][] = {
+        {19, 18, 26, 26, 26, 26, 18, 26, 18, 26, 26, 26, 26, 18, 22},
+        {17, 20,  0,  0,  0,  0, 21,  0, 21,  0,  0,  0,  0, 17, 20},
+        {17, 20,  0, 19, 26, 26, 28,  0, 25, 26, 26, 22,  0, 17, 20},
+        {17, 20,  0, 21,  0,  0,  0,  0,  0,  0,  0, 21,  0, 17, 20},
+        {17, 24, 18, 16, 18, 18, 22,  0, 19, 18, 18, 16, 18, 24, 20},
+        {21,  0, 17, 16, 16, 16, 20,  0, 17, 16, 16, 16, 20,  0, 21},
+        {21,  0, 17, 16, 24, 24, 24, 26, 24, 24, 24, 16, 20,  0, 21},
+        {21,  0, 17, 20,  0,  0,  0,  0,  0,  0,  0, 17, 20,  0, 21},
+        {21,  0, 17, 16, 18, 18, 18, 26, 18, 18, 18, 16, 20,  0, 21},
+        {21,  0, 17, 16, 16, 16, 20,  0, 17, 16, 16, 16, 20,  0, 21},
+        {17, 18, 24, 16, 24, 24, 28,  0, 25, 24, 24, 16, 24, 18, 20},
+        {17, 20,  0, 21,  0,  0,  0,  0,  0,  0,  0, 21,  0, 17, 20},
+        {17, 20,  0, 25, 26, 26, 22,  0, 19, 26, 26, 28,  0, 17, 20},
+        {17, 20,  0,  0,  0,  0, 21,  0, 21,  0,  0,  0,  0, 17, 20},
+        {25, 24, 26, 26, 26, 26, 24, 26, 24, 26, 26, 26, 26, 24, 28}
     };
 
-    private final int validSpeeds[] = {1, 2, 3, 4, 6, 8};
-    private final int maxSpeed = 6;
-
-    private int currentSpeed = 3;
-    private short[] screenData;
+    private short[][] screenData;
     private Timer timer;
 
+    /**
+    * This function is the GUI class constructor
+    */ 
     public GUI() {
-
         loadImages();
         initVariables();
         initGUI();
     }
     
+    /**
+    * This function intializes a GUI object and is called from the constructor
+    */ 
     private void initGUI() {
-        
         addKeyListener(new TAdapter());
         setFocusable(true);
         setBackground(Color.black);
     }
 
-    private void initVariables() {
 
-        screenData = new short[N_BLOCKS * N_BLOCKS];
+    /**
+    * This function intializes global variables
+    */ 
+    private void initVariables() {
+        screenData = new short[N_BLOCKS][N_BLOCKS];
         mazeColor = new Color(0, 100, 255);
         d = new Dimension(400, 400);
         
@@ -104,13 +101,17 @@ public class GUI extends JPanel implements ActionListener {
 
     private void playGame(Graphics2D g2d) {
         movePacman();
-        drawPacman(g2d);
+        drawPacman(g2d, 0, 0);
         moveGhosts();
         drawGhost(g2d, 0, 0);
         checkMaze();
         
     }
 
+    /**
+    * This function displays the initial start display
+    * @param g2d Graphics2D
+    */ 
     private void showIntroScreen(Graphics2D g2d) {
         g2d.setColor(new Color(0, 32, 48));
         g2d.fillRect(50, SCREEN_SIZE / 2 - 30, SCREEN_SIZE - 100, 50);
@@ -126,6 +127,10 @@ public class GUI extends JPanel implements ActionListener {
         g2d.drawString(s, (SCREEN_SIZE - metr.stringWidth(s)) / 2, SCREEN_SIZE / 2);
     }
 
+    /**
+    * This function draws the score in the bottom right corner of the window
+    * @param g Graphics2D
+    */ 
     private void drawScore(Graphics2D g) {
         int i;
         String s;
@@ -143,17 +148,17 @@ public class GUI extends JPanel implements ActionListener {
     private void checkMaze() {
 
         short i = 0;
+        short j = 0;
         boolean finished = true;
-
-        while (i < N_BLOCKS * N_BLOCKS && finished) {
-
-            if ((screenData[i] & 48) != 0) {
-                finished = false;
+        while (i < N_BLOCKS  && finished) {
+            while(j < N_BLOCKS && finished){
+                if ((screenData[i][j] & 48) != 0) {
+                    finished = false;
+                }
+                j++;
             }
-
             i++;
         }
-
         if (finished) {
             score += 50;
         }
@@ -164,6 +169,12 @@ public class GUI extends JPanel implements ActionListener {
         
     }
 
+    /**
+    * This function draws the ghosts using their x and y coordinates
+    * @param g2d Graphics2D
+    * @param x the x index to draw the ghost at
+    * @param y the y index to draw the ghost at
+    */ 
     private void drawGhost(Graphics2D g2d, int x, int y) {
         g2d.drawImage(ghost, x, y, this);
     }
@@ -172,66 +183,77 @@ public class GUI extends JPanel implements ActionListener {
 
     }
 
-    private void drawPacman(Graphics2D g2d) {
-
-        g2d.drawImage(pacmanImage, pacman_x + 1, pacman_y + 1, this);
+    /**
+    * This function draws pacman as he moves
+    * @param g2d Graphics2D
+    * @param x the x index to draw pacman at
+    * @param y the y index to draw pacman at
+    */ 
+    private void drawPacman(Graphics2D g2d, int x, int y) {
+        g2d.drawImage(pacmanImage, x, y, this);
     }
 
+
+   /**
+    * This function draws the maze based on the data in screenData[][]
+    * @param g2d Graphics2D
+    */ 
     private void drawMaze(Graphics2D g2d) {
 
-        short i = 0;
+        int i = 0;
+        int j;
         int x, y;
 
         for (y = 0; y < SCREEN_SIZE; y += BLOCK_SIZE) {
+            j = 0;
             for (x = 0; x < SCREEN_SIZE; x += BLOCK_SIZE) {
 
                 g2d.setColor(mazeColor);
                 g2d.setStroke(new BasicStroke(2));
 
-                if ((screenData[i] & 1) != 0) { 
+                if ((screenData[i][j] & 1) != 0) { 
                     g2d.drawLine(x, y, x, y + BLOCK_SIZE - 1);
                 }
 
-                if ((screenData[i] & 2) != 0) { 
+                if ((screenData[i][j] & 2) != 0) { 
                     g2d.drawLine(x, y, x + BLOCK_SIZE - 1, y);
                 }
 
-                if ((screenData[i] & 4) != 0) { 
+                if ((screenData[i][j] & 4) != 0) { 
                     g2d.drawLine(x + BLOCK_SIZE - 1, y, x + BLOCK_SIZE - 1,y + BLOCK_SIZE - 1);
                 }
 
-                if ((screenData[i] & 8) != 0) { 
+                if ((screenData[i][j] & 8) != 0) { 
                     g2d.drawLine(x, y + BLOCK_SIZE - 1, x + BLOCK_SIZE - 1,y + BLOCK_SIZE - 1);
                 }
 
-                if ((screenData[i] & 16) != 0) { 
+                if ((screenData[i][j] & 16) != 0) { 
                     g2d.setColor(dotColor);
                     g2d.fillRect(x + 11, y + 11, 2, 2);
                 }
+                j++;  
+            }
+            i++;
+        }
+    }
 
-                i++;
+    /**
+    * This function defines the screen data board
+    */ 
+    private void initGame() {
+        pacsLeft = 3;
+        score = 0;
+        int i, j;
+        for (i = 0; i < N_BLOCKS; i++) {
+            for(j = 0; j < N_BLOCKS; j++){
+                screenData[i][j] = levelData[i][j];
             }
         }
     }
 
-    private void initGame() {
-
-        pacsLeft = 3;
-        score = 0;
-        initLevel();
-        N_GHOSTS = 6;
-        currentSpeed = 3;
-    }
-
-    private void initLevel() {
-
-        int i;
-        for (i = 0; i < N_BLOCKS * N_BLOCKS; i++) {
-            screenData[i] = levelData[i];
-        }
-
-    }
-
+    /**
+    * This function loads in the images to represent the pacman and ghosts
+    */ 
     private void loadImages() {
         ghost = new ImageIcon("ghost.png").getImage();
         pacmanImage = new ImageIcon("pacman.png").getImage();
@@ -264,6 +286,7 @@ public class GUI extends JPanel implements ActionListener {
         Toolkit.getDefaultToolkit().sync();
         g2d.dispose();
     }
+
 
     class TAdapter extends KeyAdapter {
 
