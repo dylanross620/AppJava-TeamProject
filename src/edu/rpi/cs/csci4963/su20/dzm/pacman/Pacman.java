@@ -96,7 +96,57 @@ public class Pacman {
         //TODO
         throw new RuntimeException();
     }
-
+    /**
+     * move the pacman to next tile and calculate the scores
+     * @return the score gained on this move
+     */
+    private int movePacman(int x, int y) {
+    	
+    	
+    	if(!this.isLegalPlayerMove(x, y)) {
+    		return 0;
+    	}
+    	int gainedScore = 0;
+    	Tile tempTile = this.board[x][y];
+    	if(tempTile == Tile.EMPTY) {
+    		
+    		
+    	}
+    	else if(tempTile == Tile.ENERGIZER) {
+    		
+    	}
+    	else if(tempTile == Tile.FRUIT) {
+    		
+    	}
+    	else if(tempTile == Tile.GHOST_HOUSE) {
+    		
+    	}
+    	else if(tempTile == Tile.WALL) {
+		
+    	}
+    	return gainedScore;
+    }
+    
+    public int moveUp() {
+    	int x = this.point.row;
+    	int y = this.point.col;
+    	return this.movePacman(x+1,y);
+    }
+    public int moveDown() {
+    	int x = this.point.row;
+    	int y = this.point.col;
+    	return this.movePacman(x-1,y);
+    }
+    public int moveLeft() {
+    	int x = this.point.row;
+    	int y = this.point.col;
+    	return this.movePacman(x,y-1);
+    }
+    public int moveRight() {
+    	int x = this.point.row;
+    	int y = this.point.col;
+    	return this.movePacman(x,y+1);
+    }
     private static void initBoard() {
         board  = new Tile[36][28];
 
