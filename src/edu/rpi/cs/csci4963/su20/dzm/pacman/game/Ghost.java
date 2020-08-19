@@ -24,10 +24,10 @@ public abstract class Ghost {
     private final Point[] checkOrder = {Point.UP, Point.LEFT, Point.DOWN, Point.RIGHT};
 
     //Middle of board location for ghosts to return to if they are dead
-    protected final Point revivePoint = new Point(18, 14);
+    protected final Point revivePoint = new Point(17, 14);
 
     //Points where ghosts cannot go upwards. There are 4 on the map
-    private final Point[] noUpPoints = {new Point(16, 13), new Point(16, 15), new Point(24, 13), new Point(24, 15)};
+    private final Point[] noUpPoints = {new Point(14, 12), new Point(14, 15), new Point(26, 12), new Point(26, 15)};
 
     //Get the target location for movement decision making
     protected abstract Point getTarget();
