@@ -11,9 +11,11 @@ public class Pacman {
 	private final int ENERGIZER_SCORES = 50;
 	private final int ENERGIZER_LAST_TICKS = 3;
 	private static int energizedCounter = 0;
-    private static Tile[][] board;
-    private static Point location;
-    private static boolean running;
+  	private static Tile[][] board;
+   	private static Point location;
+   	private static boolean running;
+	private static JFrame frame;
+    	private static GUI gui;
     
     /**
      * Sets a target tile in the board to a specified type.
@@ -147,7 +149,7 @@ public class Pacman {
     		gainedScore += this.POINT_SCORES;
     	}
     	this.location = new Point(x,y);
-    	
+    	gui.repaint();
     	return gainedScore;
     }
     
@@ -200,12 +202,13 @@ public class Pacman {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.add(new GUI());
+        frame = new JFrame();
+        gui = new GUI();
+        frame.add(gui);
         
         frame.setTitle("Pacman");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(380, 420);
+        frame.setSize(560, 800);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.setResizable(false);
