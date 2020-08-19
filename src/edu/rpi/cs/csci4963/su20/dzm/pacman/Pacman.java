@@ -10,10 +10,10 @@ public class Pacman {
 	private final int FRUIT_SCORES = 30;
 	private final int ENERGIZER_SCORES = 50;
 	private final int ENERGIZER_LAST_TICKS = 3;
+	private static int energizedCounter = 0;
     private static Tile[][] board;
     private static Point location;
     private static boolean running;
-    private static boolean energized;
     
     /**
      * Sets a target tile in the board to a specified type.
@@ -123,16 +123,18 @@ public class Pacman {
     	}
     	for(int i = 0; i < ghostPos.size();i++) {
     		Point tempGhostPos = ghostPos.get(i);    		
-    		if((tempGhostPos.equals(this.location))&&this.energized == false) {
+    		if((tempGhostPos.equals(this.location))&&(this.energizedCounter > 0)) {
     				return -1;
     		}
     	}
-    	
+    	if(this.energizedCounter > 0) {
+    		this.energizedCounter -= 1;
+    	}
     	int gainedScore = 0;
     	Tile tempTile = this.board[x][y];
     	if(tempTile == Tile.ENERGIZER) {
     		gainedScore += this.ENERGIZER_SCORES;
-    		this.energized = true;
+    		this.energizedCounter = this.ENERGIZER_LAST_TICKS;
     	}
     	else if(tempTile == Tile.FRUIT) {
     		gainedScore += this.FRUIT_SCORES;
@@ -144,12 +146,14 @@ public class Pacman {
     	else if(tempTile == Tile.POINT) {
     		gainedScore += this.POINT_SCORES;
     	}
+    	this.location = new Point(x,y);
     	
     	return gainedScore;
     }
     
     /*
-     * these method move pacmen by one tile one the board in one direction.
+     * these method move pacmen by one tile one the board in one direction. And return the scores gained on this move. If -1
+     * is returned, the pacman is eaten by ghost.
      * 
      * the method required input the location of the all ghost
      * 
