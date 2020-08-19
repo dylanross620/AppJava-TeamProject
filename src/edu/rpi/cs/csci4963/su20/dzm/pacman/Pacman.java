@@ -7,11 +7,6 @@ public class Pacman {
     private static Tile[][] board;
     private static boolean running;
     
-    
-    public Pacman() { 
-        initUI();
-    }
-    
     /**
      * Sets a target tile in the board to a specified type.
      * Useful for pacman since every tile he leaves should become empty. Does nothing if target tile is out
@@ -130,25 +125,17 @@ public class Pacman {
             }
         }
     }
-    /**
-    * Initializes the GUI
-    */
-    private void initUI() {
-        
-        add(new GUI());
-        
-        setTitle("Pacman");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(380, 420);
-        setLocationRelativeTo(null);
-    }
 
     public static void main(String[] args) {
-        //initBoard()
-        EventQueue.invokeLater(() -> {
-            var ex = new Pacman();
-            ex.setVisible(true);
-        });
+        JFrame frame = new JFrame();
+        frame.add(new GUI());
+        
+        frame.setTitle("Pacman");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(380, 420);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        frame.setResizable(false);
         
         System.out.println("Test");
         System.out.println("Commmit Test");
