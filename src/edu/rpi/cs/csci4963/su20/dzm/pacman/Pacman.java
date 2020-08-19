@@ -102,14 +102,6 @@ public class Pacman {
     }
 
     /**
-     * Get a copy of Blinky's current position
-     * @return the current position of Blinky
-     */
-    public static Point getBlinkyPos() {
-        //TODO
-        throw new RuntimeException();
-    }
-    /**
      * move the pacman to next tile and calculate the scores
      * @return the score gained on this move
      */

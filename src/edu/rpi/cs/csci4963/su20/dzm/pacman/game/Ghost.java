@@ -6,6 +6,9 @@ import java.util.List;
 import edu.rpi.cs.csci4963.su20.dzm.pacman.Pacman;
 import edu.rpi.cs.csci4963.su20.dzm.pacman.Tile;
 
+/**
+ * Abstract Ghost super class. Contains most of the ghost logic
+ */
 public abstract class Ghost {
 
     protected int moveGap;
@@ -26,8 +29,10 @@ public abstract class Ghost {
     //Points where ghosts cannot go upwards. There are 4 on the map
     private final Point[] noUpPoints = {new Point(16, 13), new Point(16, 15), new Point(24, 13), new Point(24, 15)};
 
+    //Get the target location for movement decision making
     protected abstract Point getTarget();
 
+    //Protected constructor so it can be called by the ghosts themselves, but not anything else
     protected Ghost(Point curPos, boolean inHouse) {
         moveGap = 6;
         tickCounter = 0;
@@ -41,31 +46,54 @@ public abstract class Ghost {
         isDead = false;
     }
 
+    /**
+     * Makes the ghost die and attempt to return to the ghost house in order to revive
+     */
     public void die() {
         isDead = true;
         leftHouse = false;
     }
 
+    /**
+     * Get whether or not the ghost is currently dead
+     * @return true if the ghost is dead, false otherwise
+     */
     public boolean getIsDead() {
         return isDead;
     }
 
+    /**
+     * Get a copy of the ghost's current position
+     * @return a copy of the current position
+     */
     public Point getPosition() {
         return new Point(curPos.row, curPos.col);
     }
 
+    /**
+     * Set the ghost's movement mode
+     * @param newMode the desired value for the new movement mode
+     */
     public void setMode(GhostMode newMode) {
         GhostMode tmp = curMode;
         curMode = newMode;
 
+        //If changing modes out of chase or scatter, the ghost must turn around
         if (tmp == GhostMode.CHASE || tmp == GhostMode.SCATTER)
             mustMove = prevPos;
     }
 
+    /**
+     * Get the ghost's current movement mode
+     * @return the current movement mode
+     */
     public GhostMode getMode() {
         return curMode;
     }
 
+    /**
+     * Should be called every game tick. If enough ticks have gone by for the ghost's speed, then the ghost will move.
+     */
     public void tick() {
         //Only move every moveGap ticks. Allows customizing ghost speeds (notably for Cruise Elroy mode for Blinkey)
         if (++tickCounter >= moveGap) {
@@ -75,6 +103,7 @@ public abstract class Ghost {
         }
     }
 
+    //Actually move the ghost
     private void move() {
         //Have a forced move, so do it and end turn
         if (mustMove != null) {
@@ -113,6 +142,7 @@ public abstract class Ghost {
                 potentialPoints.add(new Point(targetRow, targetCol));
         }
 
+        //Update previous position before curPos is overwritten
         prevPos = curPos;
 
         if (potentialPoints.size() == 0)
@@ -138,6 +168,7 @@ public abstract class Ghost {
         }
 
         //Check if we need to revive. If not, make sure leftHouse is accurate
+        //Ghosts can never be in the ghost house and be dead since they revive upon entering it
         if (Pacman.getBoardPos(curPos.row, curPos.col) == Tile.GHOST_HOUSE)
             isDead = false;
         else
