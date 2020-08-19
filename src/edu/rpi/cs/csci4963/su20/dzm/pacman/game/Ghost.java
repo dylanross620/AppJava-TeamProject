@@ -9,8 +9,10 @@ public abstract class Ghost {
 
     protected int moveGap;
     private int tickCounter;
+
     protected Point curPos;
-    private Point prevPos;
+    private Point prevPos, mustMove;
+
     protected GhostMode curMode;
     private boolean leftHouse;
 
@@ -27,10 +29,23 @@ public abstract class Ghost {
 
         leftHouse = !inHouse;
         curMode = GhostMode.SCATTER;
+        mustMove = null;
     }
 
     public Point getPosition() {
         return new Point(curPos.row, curPos.col);
+    }
+
+    public void setMode(GhostMode newMode) {
+        GhostMode tmp = curMode;
+        curMode = newMode;
+
+        if (tmp == GhostMode.CHASE || tmp == GhostMode.SCATTER)
+            mustMove = prevPos;
+    }
+
+    public GhostMode getMode() {
+        return curMode;
     }
 
     public void tick() {
@@ -38,41 +53,53 @@ public abstract class Ghost {
         if (++tickCounter >= moveGap) {
             tickCounter = 0;
 
-            List<Point> potentialPoints = new ArrayList<Point>(4);
+            move();
+        }
+    }
 
-            //Make sure list is in the order of preference for when one is selected later
-            for (Point diff : checkOrder) {
-                    int targetRow = curPos.row + diff.row;
-                    int targetCol = curPos.col + diff.col;
-
-                    //Don't allow turning around
-                    if (prevPos.row == targetRow && prevPos.col == targetCol)
-                        continue;
-                    if (Pacman.isLegalGhostMove(targetRow, targetCol, leftHouse))
-                        potentialPoints.add(new Point(targetRow, targetCol));
-            }
-
+    private void move() {
+        //Have a forced move, so do it and end turn
+        if (mustMove != null) {
             prevPos = curPos;
+            curPos = mustMove;
+            mustMove = null;
+            return;
+        }
 
-            if (potentialPoints.size() == 0)
-                return;
+        List<Point> potentialPoints = new ArrayList<Point>(4);
 
-            if (potentialPoints.size() == 1)
-                curPos = potentialPoints.get(0);
-            else if (curMode == GhostMode.FRIGHTENED) //Select random turn if frightened
-                curPos = potentialPoints.get((int) (Math.random() * potentialPoints.size()));
-            else {
-                //Find move that gets closest to target with order of preference being up, left, down, right in ties
-                Point target = getTarget();
+        //Make sure list is in the order of preference for when one is selected later
+        for (Point diff : checkOrder) {
+                int targetRow = curPos.row + diff.row;
+                int targetCol = curPos.col + diff.col;
 
-                double distToTarget = Double.MAX_VALUE;
-                for (Point p : potentialPoints) {
-                    double dist = Math.sqrt(Math.pow(target.row - p.row, 2) + Math.pow(target.col - p.col, 2));
+                //Don't allow turning around
+                if (prevPos.row == targetRow && prevPos.col == targetCol)
+                    continue;
+                if (Pacman.isLegalGhostMove(targetRow, targetCol, leftHouse))
+                    potentialPoints.add(new Point(targetRow, targetCol));
+        }
 
-                    if (dist < distToTarget) {
-                        distToTarget = dist;
-                        curPos = p;
-                    }
+        prevPos = curPos;
+
+        if (potentialPoints.size() == 0)
+            return;
+
+        if (potentialPoints.size() == 1)
+            curPos = potentialPoints.get(0);
+        else if (curMode == GhostMode.FRIGHTENED) //Select random turn if frightened
+            curPos = potentialPoints.get((int) (Math.random() * potentialPoints.size()));
+        else {
+            //Find move that gets closest to target with order of preference being up, left, down, right in ties
+            Point target = getTarget();
+
+            double distToTarget = Double.MAX_VALUE;
+            for (Point p : potentialPoints) {
+                double dist = Math.sqrt(Math.pow(target.row - p.row, 2) + Math.pow(target.col - p.col, 2));
+
+                if (dist < distToTarget) {
+                    distToTarget = dist;
+                    curPos = p;
                 }
             }
         }
