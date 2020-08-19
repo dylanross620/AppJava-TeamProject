@@ -19,6 +19,33 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+public class Pacman extends JFrame {
+
+    public Pacman() {
+        
+        initUI();
+    }
+    
+    private void initUI() {
+        
+        add(new GUI());
+        
+        setTitle("Pacman");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(380, 420);
+        setLocationRelativeTo(null);
+    }
+
+    public static void main(String[] args) {
+
+        EventQueue.invokeLater(() -> {
+            var ex = new Pacman();
+            ex.setVisible(true);
+        });
+    }
+}
+
+
 
 public class GUI extends JPanel implements ActionListener {
 
@@ -32,8 +59,10 @@ public class GUI extends JPanel implements ActionListener {
     private boolean inGame = false;
 
     private final int BLOCK_SIZE = 24;
-    private final int N_BLOCKS = 15;
-    private final int SCREEN_SIZE = N_BLOCKS * BLOCK_SIZE;
+    private final int W_BLOCKS = 17;
+    private final int H_BLOCKS = 20;
+    private final int SCREEN_HEIGHT = H_BLOCKS * BLOCK_SIZE;
+    private final int SCREEN_WIDTH = W_BLOCKS * BLOCK_SIZE;
 
     private int N_GHOSTS = 3;
     private int pacsLeft, score;
@@ -41,21 +70,26 @@ public class GUI extends JPanel implements ActionListener {
     private Image pacmanImage;
 
     private final short levelData[][] = {
-        {19, 18, 26, 26, 26, 26, 18, 26, 18, 26, 26, 26, 26, 18, 22},
-        {17, 20,  0,  0,  0,  0, 21,  0, 21,  0,  0,  0,  0, 17, 20},
-        {17, 20,  0, 19, 26, 26, 28,  0, 25, 26, 26, 22,  0, 17, 20},
-        {17, 20,  0, 21,  0,  0,  0,  0,  0,  0,  0, 21,  0, 17, 20},
-        {17, 24, 18, 16, 18, 18, 22,  0, 19, 18, 18, 16, 18, 24, 20},
-        {21,  0, 17, 16, 16, 16, 20,  0, 17, 16, 16, 16, 20,  0, 21},
-        {21,  0, 17, 16, 24, 24, 24, 26, 24, 24, 24, 16, 20,  0, 21},
-        {21,  0, 17, 20,  0,  0,  0,  0,  0,  0,  0, 17, 20,  0, 21},
-        {21,  0, 17, 16, 18, 18, 18, 26, 18, 18, 18, 16, 20,  0, 21},
-        {21,  0, 17, 16, 16, 16, 20,  0, 17, 16, 16, 16, 20,  0, 21},
-        {17, 18, 24, 16, 24, 24, 28,  0, 25, 24, 24, 16, 24, 18, 20},
-        {17, 20,  0, 21,  0,  0,  0,  0,  0,  0,  0, 21,  0, 17, 20},
-        {17, 20,  0, 25, 26, 26, 22,  0, 19, 26, 26, 28,  0, 17, 20},
-        {17, 20,  0,  0,  0,  0, 21,  0, 21,  0,  0,  0,  0, 17, 20},
-        {25, 24, 26, 26, 26, 26, 24, 26, 24, 26, 26, 26, 26, 24, 28}
+        {19, 26, 26, 18, 26, 26, 26, 22,  0, 19, 26, 26, 26, 18, 26, 26, 22},
+        {21,  0,  0, 21,  0,  0,  0, 21,  0, 21,  0,  0,  0, 21,  0,  0, 21},
+        {21,  0,  0, 21,  0,  0,  0, 21,  0, 21,  0,  0,  0, 21,  0,  0, 21},
+        {17, 26, 26, 16, 26, 18, 26, 24, 26, 24, 26, 18, 26, 16, 26, 26, 20},
+        {21,  0,  0, 21,  0, 21,  0,  0,  0,  0,  0, 21,  0, 21,  0,  0, 21},
+        {25, 26, 26, 20,  0, 25, 26, 22,  0, 19, 26, 28,  0, 17, 26, 26, 28},
+        { 0,  0,  0, 21,  0,  0,  0, 21,  0, 21,  0,  0,  0, 21,  0,  0,  0},
+        { 0,  0,  0, 21,  0, 19, 26, 24, 26, 24, 26, 22,  0, 21,  0,  0,  0},
+        { 0,  0,  0, 21,  0, 21,  0,  0,  0,  0,  0, 21,  0, 21,  0,  0,  0},
+        {26, 26, 26, 16, 26, 20,  0,  0,  0,  0,  0, 17, 26, 16, 26, 26, 26},
+        { 0,  0,  0, 21,  0, 21,  0,  0,  0,  0,  0, 21,  0, 21,  0,  0,  0},
+        { 0,  0,  0, 21,  0, 17, 26, 26, 26, 26, 26, 20,  0, 21,  0,  0,  0},
+        { 0,  0,  0, 21,  0, 21,  0,  0,  0,  0,  0, 21,  0, 21,  0,  0,  0},
+        {19, 26, 26, 16, 26, 24, 26, 22,  0, 19, 26, 24, 26, 16, 26, 26, 22},
+        {21,  0,  0, 21,  0,  0,  0, 21,  0, 21,  0,  0,  0, 21,  0,  0, 21},
+        {25, 22,  0, 17, 26, 18, 26, 24, 26, 24, 26, 18, 26, 20,  0, 19, 28},
+        { 0, 21,  0, 21,  0, 21,  0,  0,  0,  0,  0, 21,  0, 21,  0, 21,  0},
+        {19, 24, 26, 28,  0, 25, 26, 22,  0, 19, 26, 28,  0, 25, 26, 24, 22},
+        {21,  0,  0,  0,  0,  0,  0, 21,  0, 21,  0,  0,  0,  0,  0,  0, 21},
+        {25, 26, 26, 26, 26, 26, 26, 24, 26, 24, 26, 26, 26, 26, 26, 26, 28}
     };
 
     private short[][] screenData;
@@ -84,7 +118,7 @@ public class GUI extends JPanel implements ActionListener {
     * This function intializes global variables
     */ 
     private void initVariables() {
-        screenData = new short[N_BLOCKS][N_BLOCKS];
+        screenData = new short[H_BLOCKS][W_BLOCKS];
         mazeColor = new Color(0, 100, 255);
         d = new Dimension(400, 400);
         
@@ -114,9 +148,9 @@ public class GUI extends JPanel implements ActionListener {
     */ 
     private void showIntroScreen(Graphics2D g2d) {
         g2d.setColor(new Color(0, 32, 48));
-        g2d.fillRect(50, SCREEN_SIZE / 2 - 30, SCREEN_SIZE - 100, 50);
+        g2d.fillRect(50, SCREEN_HEIGHT / 2 - 30, SCREEN_WIDTH - 100, 50);
         g2d.setColor(Color.white);
-        g2d.drawRect(50, SCREEN_SIZE / 2 - 30, SCREEN_SIZE - 100, 50);
+        g2d.drawRect(50,  SCREEN_HEIGHT/ 2 - 30, SCREEN_WIDTH - 100, 50);
 
         String s = "Press s to start.";
         Font small = new Font("Helvetica", Font.BOLD, 14);
@@ -124,7 +158,7 @@ public class GUI extends JPanel implements ActionListener {
 
         g2d.setColor(Color.white);
         g2d.setFont(small);
-        g2d.drawString(s, (SCREEN_SIZE - metr.stringWidth(s)) / 2, SCREEN_SIZE / 2);
+        g2d.drawString(s, (SCREEN_WIDTH - metr.stringWidth(s)) / 2, SCREEN_HEIGHT / 2);
     }
 
     /**
@@ -138,10 +172,10 @@ public class GUI extends JPanel implements ActionListener {
         g.setFont(smallFont);
         g.setColor(new Color(96, 128, 255));
         s = "Score: " + score;
-        g.drawString(s, SCREEN_SIZE / 2 + 96, SCREEN_SIZE + 16);
+        g.drawString(s, SCREEN_WIDTH / 2 + 96, SCREEN_HEIGHT + 16);
 
         for (i = 0; i < pacsLeft; i++) {
-            g.drawImage(pacmanImage, i * 28 + 8, SCREEN_SIZE + 1, this);
+            g.drawImage(pacmanImage, i * 28 + 8, SCREEN_HEIGHT + 1, this);
         }
     }
 
@@ -150,8 +184,8 @@ public class GUI extends JPanel implements ActionListener {
         short i = 0;
         short j = 0;
         boolean finished = true;
-        while (i < N_BLOCKS  && finished) {
-            while(j < N_BLOCKS && finished){
+        while (i < H_BLOCKS  && finished) {
+            while(j < W_BLOCKS && finished){
                 if ((screenData[i][j] & 48) != 0) {
                     finished = false;
                 }
@@ -204,10 +238,9 @@ public class GUI extends JPanel implements ActionListener {
         int j;
         int x, y;
 
-        for (y = 0; y < SCREEN_SIZE; y += BLOCK_SIZE) {
+        for (y = 0; y < SCREEN_HEIGHT; y += BLOCK_SIZE) {
             j = 0;
-            for (x = 0; x < SCREEN_SIZE; x += BLOCK_SIZE) {
-
+            for (x = 0; x < SCREEN_WIDTH; x += BLOCK_SIZE) {
                 g2d.setColor(mazeColor);
                 g2d.setStroke(new BasicStroke(2));
 
@@ -244,8 +277,8 @@ public class GUI extends JPanel implements ActionListener {
         pacsLeft = 3;
         score = 0;
         int i, j;
-        for (i = 0; i < N_BLOCKS; i++) {
-            for(j = 0; j < N_BLOCKS; j++){
+        for (i = 0; i < H_BLOCKS; i++) {
+            for(j = 0; j < W_BLOCKS; j++){
                 screenData[i][j] = levelData[i][j];
             }
         }
