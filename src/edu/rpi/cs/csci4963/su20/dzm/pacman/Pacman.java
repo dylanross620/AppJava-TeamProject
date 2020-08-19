@@ -23,6 +23,19 @@ public class Pacman {
     }
 
     /**
+     * Gets the tile value for a target position in the board. Out of bounds accesses returns a wall.
+     * @param row the row of the target tile
+     * @param col the column of the target tile
+     * @return the value of the tile at the specified location
+     */
+    public static Tile getBoardPos(int row, int col) {
+        if (row < 0 || row >= board.length || col < 0 || col >= board[0].length)
+            return Tile.WALL;
+        
+        return board[row][col];
+    }
+
+    /**
      * Get whether or not pacman can legally move into a tile, given that he can access that tile from his current location
      * @param row the row of the target tile
      * @param col the column of the target tile

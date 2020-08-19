@@ -12,6 +12,9 @@ public class Pinky extends Ghost {
 
     @Override
     protected Point getTarget() {
+        if (getIsDead())
+            return revivePoint;
+
         if (curMode == GhostMode.SCATTER)
             return scatterTarget;
         

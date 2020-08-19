@@ -23,6 +23,9 @@ public class Blinky extends Ghost {
 
     @Override
     protected Point getTarget() {
+        if (getIsDead())
+            return revivePoint;
+        
         if (curMode == GhostMode.SCATTER && !alwaysChase)
             return scatterTarget;
         return Pacman.getPlayerPos();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.rpi.cs.csci4963.su20.dzm.pacman.Pacman;
+import edu.rpi.cs.csci4963.su20.dzm.pacman.Tile;
 
 public abstract class Ghost {
 
@@ -14,9 +15,11 @@ public abstract class Ghost {
     private Point prevPos, mustMove;
 
     protected GhostMode curMode;
-    private boolean leftHouse;
+    private boolean leftHouse, isDead;
 
     private final Point[] checkOrder = {Point.UP, Point.LEFT, Point.DOWN, Point.RIGHT};
+    //Middle of board location for ghosts to return to if they are dead
+    protected final Point revivePoint = new Point(18, 14);
 
     protected abstract Point getTarget();
 
@@ -30,6 +33,16 @@ public abstract class Ghost {
         leftHouse = !inHouse;
         curMode = GhostMode.SCATTER;
         mustMove = null;
+        isDead = false;
+    }
+
+    public void die() {
+        isDead = true;
+        leftHouse = false;
+    }
+
+    public boolean getIsDead() {
+        return isDead;
     }
 
     public Point getPosition() {
@@ -103,6 +116,12 @@ public abstract class Ghost {
                 }
             }
         }
+
+        //Check if we need to revive. If not, make sure leftHouse is accurate
+        if (Pacman.getBoardPos(curPos.row, curPos.col) == Tile.GHOST_HOUSE)
+            isDead = false;
+        else
+            leftHouse = true;
     }
 
 }
