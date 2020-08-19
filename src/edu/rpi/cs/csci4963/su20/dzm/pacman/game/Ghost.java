@@ -17,9 +17,14 @@ public abstract class Ghost {
     protected GhostMode curMode;
     private boolean leftHouse, isDead;
 
+    //Order to check potential moves in. Because of strictly less distance checking, also is the move priority order
     private final Point[] checkOrder = {Point.UP, Point.LEFT, Point.DOWN, Point.RIGHT};
+
     //Middle of board location for ghosts to return to if they are dead
     protected final Point revivePoint = new Point(18, 14);
+
+    //Points where ghosts cannot go upwards. There are 4 on the map
+    private final Point[] noUpPoints = {new Point(16, 13), new Point(16, 15), new Point(24, 13), new Point(24, 15)};
 
     protected abstract Point getTarget();
 
@@ -83,14 +88,29 @@ public abstract class Ghost {
 
         //Make sure list is in the order of preference for when one is selected later
         for (Point diff : checkOrder) {
-                int targetRow = curPos.row + diff.row;
-                int targetCol = curPos.col + diff.col;
+            //If we are on one of the points we can't go up at, don't check up
+            if (diff == Point.UP) {
+                boolean onPoint = false;
 
-                //Don't allow turning around
-                if (prevPos.row == targetRow && prevPos.col == targetCol)
+                for (Point noUp : noUpPoints) {
+                    if (curPos.equals(noUp)) {
+                        onPoint = true;
+                        break;
+                    }
+                }
+
+                if (onPoint)
                     continue;
-                if (Pacman.isLegalGhostMove(targetRow, targetCol, leftHouse))
-                    potentialPoints.add(new Point(targetRow, targetCol));
+            }
+
+            int targetRow = curPos.row + diff.row;
+            int targetCol = curPos.col + diff.col;
+
+            //Don't allow turning around
+            if (prevPos.row == targetRow && prevPos.col == targetCol)
+                continue;
+            if (Pacman.isLegalGhostMove(targetRow, targetCol, leftHouse))
+                potentialPoints.add(new Point(targetRow, targetCol));
         }
 
         prevPos = curPos;
