@@ -1,11 +1,19 @@
 package edu.rpi.cs.csci4963.su20.dzm.pacman;
 
+import java.util.ArrayList;
+
 import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Point;
 
 public class Pacman {
-
+	
+	private final int POINT_SCORES = 10;
+	private final int FRUIT_SCORES = 30;
+	private final int ENERGIZER_SCORES = 50;
+	private final int ENERGIZER_LAST_TICKS = 3;
     private static Tile[][] board;
+    private static Point location;
     private static boolean running;
+    private static boolean energized;
     
     /**
      * Sets a target tile in the board to a specified type.
@@ -69,8 +77,7 @@ public class Pacman {
      * @return the current position of the player
      */
     public static Point getPlayerPos() {
-        //TODO
-        throw new RuntimeException();
+    	return location;
     }
 
     /**
@@ -103,54 +110,61 @@ public class Pacman {
 
     /**
      * move the pacman to next tile and calculate the scores
-     * @return the score gained on this move
+     * @param x row 
+     * @param y col 
+     * @param ghostPos The location of all ghosts.
+     * @return zero and positive for the score gained on this move
+     * 			-1 if the pacman is eaten by the ghost
      */
-    private int movePacman(int x, int y) {
-    	
+    private int movePacman(int x, int y, ArrayList<Point> ghostPos) {
     	
     	if(!this.isLegalPlayerMove(x, y)) {
     		return 0;
     	}
+    	for(int i = 0; i < ghostPos.size();i++) {
+    		Point tempGhostPos = ghostPos.get(i);    		
+    		if((tempGhostPos.equals(this.location))&&this.energized == false) {
+    				return -1;
+    		}
+    	}
+    	
     	int gainedScore = 0;
     	Tile tempTile = this.board[x][y];
-    	if(tempTile == Tile.EMPTY) {
-    		
-    		
-    	}
-    	else if(tempTile == Tile.ENERGIZER) {
-    		
+    	if(tempTile == Tile.ENERGIZER) {
+    		gainedScore += this.ENERGIZER_SCORES;
+    		this.energized = true;
     	}
     	else if(tempTile == Tile.FRUIT) {
-    		
+    		gainedScore += this.FRUIT_SCORES;
     	}
-    	else if(tempTile == Tile.GHOST_HOUSE) {
-    		
+//    	both wall and ghost house are not allowed to enter
+    	else if(tempTile == Tile.WALL||tempTile == Tile.GHOST_HOUSE) {
+    		return gainedScore;
     	}
-    	else if(tempTile == Tile.WALL) {
-		
+    	else if(tempTile == Tile.POINT) {
+    		gainedScore += this.POINT_SCORES;
     	}
+    	
     	return gainedScore;
     }
     
-    public int moveUp() {
-    	int x = this.point.row;
-    	int y = this.point.col;
-    	return this.movePacman(x+1,y);
+    /*
+     * these method move pacmen by one tile one the board in one direction.
+     * 
+     * the method required input the location of the all ghost
+     * 
+     */
+    public int moveUp(ArrayList<Point> ghostPos) {
+    	return this.movePacman(this.location.row+1, this.location.col, ghostPos);
     }
-    public int moveDown() {
-    	int x = this.point.row;
-    	int y = this.point.col;
-    	return this.movePacman(x-1,y);
+    public int moveDown(ArrayList<Point> ghostPos) {
+    	return this.movePacman(this.location.row-1, this.location.col, ghostPos);
     }
-    public int moveLeft() {
-    	int x = this.point.row;
-    	int y = this.point.col;
-    	return this.movePacman(x,y-1);
+    public int moveLeft(ArrayList<Point> ghostPos) {
+    	return this.movePacman(this.location.row, this.location.col-1, ghostPos);
     }
-    public int moveRight() {
-    	int x = this.point.row;
-    	int y = this.point.col;
-    	return this.movePacman(x,y+1);
+    public int moveRight(ArrayList<Point> ghostPos) {
+    	return this.movePacman(this.location.row, this.location.col+1, ghostPos);
     }
     private static void initBoard() {
         board  = new Tile[36][28];
