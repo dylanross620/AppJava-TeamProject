@@ -11,6 +11,7 @@ public class Pacman {
 	private final int ENERGIZER_SCORES = 50;
 	private final int ENERGIZER_LAST_TICKS = 3;
 	private static int energizedCounter = 0;
+	private static int scores = 0;
   	private static Tile[][] board;
    	private static Point location;
    	private static boolean running;
@@ -83,31 +84,11 @@ public class Pacman {
     }
 
     /**
-     * Get a copy of the current direction of the player
-     * A point can also be used to represent a 2D vector
-     * @return the player's current direction
-     */
-    public static Point getPlayerDir() {
-        //TODO
-        throw new RuntimeException();
-    }
-
-    /**
      * Get the player's current score
      * @return the current score of the player
      */
     public static int getPlayerScore() {
-        //TODO
-        throw new RuntimeException();
-    }
-
-    /**
-     * Get the maximum score achievable in the level
-     * @return the maximum possible score
-     */
-    public static int getMaxScore() {
-        //TODO
-        throw new RuntimeException();
+    	return scores;
     }
 
     /**
@@ -126,6 +107,7 @@ public class Pacman {
     	for(int i = 0; i < ghostPos.size();i++) {
     		Point tempGhostPos = ghostPos.get(i);    		
     		if((tempGhostPos.equals(this.location))&&(this.energizedCounter > 0)) {
+    			this.location = new Point(0,0);
     				return -1;
     		}
     	}
@@ -150,6 +132,7 @@ public class Pacman {
     	}
     	this.location = new Point(x,y);
     	gui.repaint();
+    	scores += gainedScore;
     	return gainedScore;
     }
     
@@ -192,6 +175,7 @@ public class Pacman {
         long tickGap = 1000L / ticksPerSec; // time in milliseconds
         
         running = true;
+        
         long lastTick = 0;
         while (running) {
             if (System.currentTimeMillis() - lastTick >= tickGap) {
