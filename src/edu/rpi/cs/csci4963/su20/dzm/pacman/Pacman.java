@@ -118,7 +118,7 @@ public class Pacman {
     		Point tempGhostPos = ghostPos.get(i);   
 //    		If pacman dies.
     		if((tempGhostPos.equals(this.location))&&(this.energizedCounter > 0)) {
-    			this.location = new Point(0,0);
+				this.location = new Point(27,14);
     				return -1;
     		}
     	}
