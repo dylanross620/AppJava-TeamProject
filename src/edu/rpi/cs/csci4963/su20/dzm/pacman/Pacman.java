@@ -13,6 +13,7 @@ public class Pacman {
 	private static int energizedCounter = 0;
 	private static int scores = 0;
   	private static Tile[][] board;
+  	private static Point direction;
    	private static Point location;
    	private static boolean running;
 	private static JFrame frame;
@@ -84,6 +85,15 @@ public class Pacman {
     }
 
     /**
+     * Get a copy of the current direction of the player
+     * A point can also be used to represent a 2D vector
+     * @return the player's current direction
+     */
+    public static Point getPlayerDir() {
+    	return direction;
+    }
+
+    /**
      * Get the player's current score
      * @return the current score of the player
      */
@@ -92,7 +102,7 @@ public class Pacman {
     }
 
     /**
-     * move the pacman to next tile and calculate the scores
+     * move the pacman to next tile and calculate the scores, if pacman dies, the pacman back to 0,0 on board
      * @param x row 
      * @param y col 
      * @param ghostPos The location of all ghosts.
@@ -105,7 +115,8 @@ public class Pacman {
     		return 0;
     	}
     	for(int i = 0; i < ghostPos.size();i++) {
-    		Point tempGhostPos = ghostPos.get(i);    		
+    		Point tempGhostPos = ghostPos.get(i);   
+//    		If pacman dies.
     		if((tempGhostPos.equals(this.location))&&(this.energizedCounter > 0)) {
     			this.location = new Point(0,0);
     				return -1;
@@ -144,15 +155,19 @@ public class Pacman {
      * 
      */
     public int moveUp(ArrayList<Point> ghostPos) {
+    	this.direction = Point.UP;
     	return this.movePacman(this.location.row+1, this.location.col, ghostPos);
     }
     public int moveDown(ArrayList<Point> ghostPos) {
+    	this.direction = Point.DOWN;
     	return this.movePacman(this.location.row-1, this.location.col, ghostPos);
     }
     public int moveLeft(ArrayList<Point> ghostPos) {
+    	this.direction = Point.LEFT;
     	return this.movePacman(this.location.row, this.location.col-1, ghostPos);
     }
     public int moveRight(ArrayList<Point> ghostPos) {
+    	this.direction = Point.RIGHT;
     	return this.movePacman(this.location.row, this.location.col+1, ghostPos);
     }
     private static void initBoard() {
@@ -175,7 +190,6 @@ public class Pacman {
         long tickGap = 1000L / ticksPerSec; // time in milliseconds
         
         running = true;
-        
         long lastTick = 0;
         while (running) {
             if (System.currentTimeMillis() - lastTick >= tickGap) {
