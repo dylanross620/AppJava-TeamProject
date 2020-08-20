@@ -41,9 +41,11 @@ public class GUI extends JPanel implements ActionListener {
     private final int SCREEN_HEIGHT = H_BLOCKS * BLOCK_SIZE;
     private final int SCREEN_WIDTH = W_BLOCKS * BLOCK_SIZE;
 
-    private int N_GHOSTS = 3;
     private int pacsLeft, score;
-    private Image ghost;
+    private Image ghostBlinky;
+    private Image ghostPinky;
+    private Image ghostInky;
+    private Image ghostClyde;
     private Image pacmanImage;
 
     private final short levelData[][] = {
@@ -172,16 +174,21 @@ public class GUI extends JPanel implements ActionListener {
     * @param g2d Graphics2D
     */ 
     private void drawGhost(Graphics2D g2d) {
-        Point loc = getPlayerPos();
-        g2d.drawImage(ghost, loc.col, loc.row, this);
+        /*
+        g2d.drawImage(ghostBlinky, x, y, this);
+        g2d.drawImage(ghostPinky, x, y, this);
+        g2d.drawImage(ghostClyde, x, y, this);
+        g2d.drawImage(ghostInky, x, y, this);*/
     }
+    
 
     /**
     * This function draws pacman as he moves
     * @param g2d Graphics2D
     */ 
     private void drawPacman(Graphics2D g2d) {
-        //g2d.drawImage(pacmanImage, x, y, this);
+        Point loc = getPlayerPos();
+        g2d.drawImage(pacmanImage, loc.col, loc.row, this);
     }
 
     /**
@@ -191,7 +198,10 @@ public class GUI extends JPanel implements ActionListener {
     * @param y the y index to draw the ghost at
     */ 
     private void drawGhost(Graphics2D g2d, int x, int y) {
-        g2d.drawImage(ghost, x, y, this);
+        g2d.drawImage(ghostBlinky, x, y, this);
+        g2d.drawImage(ghostPinky, x, y, this);
+        g2d.drawImage(ghostClyde, x, y, this);
+        g2d.drawImage(ghostInky, x, y, this);
     }
 
     /**
@@ -265,7 +275,10 @@ public class GUI extends JPanel implements ActionListener {
     * This function loads in the images to represent the pacman and ghosts
     */ 
     private void loadImages() {
-        ghost = new ImageIcon("ghost.png").getImage();
+        ghostBlinky = new ImageIcon("blinky.png").getImage();
+        ghostPinky = new ImageIcon("pinky.png").getImage();
+        ghostInky = new ImageIcon("inky.png").getImage();
+        ghostClyde = new ImageIcon("clyde.png").getImage();
         pacmanImage = new ImageIcon("pacman.png").getImage();
     }
 
@@ -312,7 +325,9 @@ public class GUI extends JPanel implements ActionListener {
                 inGame = true;
                 initGame();
             }
+            
         }
+
     }
 
     @Override
