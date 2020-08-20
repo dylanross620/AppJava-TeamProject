@@ -41,6 +41,7 @@ public class GUI extends JPanel implements ActionListener {
     private final int SCREEN_HEIGHT = H_BLOCKS * BLOCK_SIZE;
     private final int SCREEN_WIDTH = W_BLOCKS * BLOCK_SIZE;
 
+    private int N_GHOSTS = 3;
     private int pacsLeft, score;
     private Image ghostBlinky;
     private Image ghostPinky;
@@ -341,3 +342,5 @@ public class GUI extends JPanel implements ActionListener {
         repaint();
     }
 }
+
+
