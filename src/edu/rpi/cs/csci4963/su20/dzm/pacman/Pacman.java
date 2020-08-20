@@ -280,6 +280,8 @@ public class Pacman {
         pinky = new Pinky(new Point(17, 13));
 
         ghosts = new Ghost[] {blinky, clyde, inky, pinky};
+
+        location = new Point(27, 14);
     }
 
     private static void tick() {
