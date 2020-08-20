@@ -1,12 +1,19 @@
 package edu.rpi.cs.csci4963.su20.dzm.pacman;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.JFrame;
 
 import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Point;
 
 public class Pacman {
+
+    /**
+     * The total score of all pellets and energizers
+     */
+    public static final int MAX_SCORE = 2600;
 	
 	private final int POINT_SCORES = 10;
 	private final int FRUIT_SCORES = 30;
@@ -198,15 +205,30 @@ public class Pacman {
     	this.direction = Point.RIGHT;
     	return this.movePacman(this.location.row, this.location.col+1, ghostPos);
     }
-    private static void initBoard() {
-        board  = new Tile[36][28];
 
-        //TODO
-        throw new RuntimeException();
+    private static void initBoard() {
+        board = new Tile[36][28];
+        
+        try (Scanner scan = new Scanner(new FileInputStream("board.csv"))) {
+            Tile[] values = Tile.values();
+
+            for (int row = 0; row < 36; ++row) {
+                String[] tiles = scan.nextLine().split(",", 0);
+
+                for (int col = 0; col < 14; ++col) {
+                    Tile tile = values[Integer.valueOf(tiles[col])];
+                    board[row][col] = tile;
+                    board[row][28-col-1] = tile;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error loading board");
+            e.printStackTrace();
+        }
     }
 
     private static void tick() {
-        
+
     }
 
     /**
@@ -227,6 +249,8 @@ public class Pacman {
     }
 
     public static void main(String[] args) {
+        initBoard();
+
         frame = new JFrame();
         gui = new GUI();
         frame.add(gui);

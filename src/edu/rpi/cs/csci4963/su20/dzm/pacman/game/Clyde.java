@@ -26,7 +26,7 @@ public class Clyde extends Ghost {
             return revivePoint;
         
         //If player hasn't scored enough points yet, don't enter the field
-        if (((double) Pacman.getPlayerScore()) / Pacman.getMaxScore() < 1.0/3)
+        if (((double) Pacman.getPlayerScore()) / Pacman.MAX_SCORE < 1.0/3)
             return startPos;
 
         //If in scatter mode, go to scatter target
