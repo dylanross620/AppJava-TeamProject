@@ -193,7 +193,7 @@ public class GUI extends JPanel implements ActionListener {
     * @param g2d Graphics2D
     */ 
     private void drawPacman(Graphics2D g2d) {
-        Point loc = getPlayerPos();
+        Point loc = Pacman.getPlayerPos();
         g2d.drawImage(pacmanImage, loc.col, loc.row, this);
     }
 

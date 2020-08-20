@@ -29,7 +29,7 @@ public class Inky extends Ghost {
             return revivePoint;
 
         //If player hasn't scored enough yet, don't enter field
-        if (Pacman.getPlayerScore() < 30)
+        if (Pacman.getPlayerScore() < 300)
             return startPos;
 
         //If in scatter mode, go to scatter target

@@ -2,6 +2,8 @@ package edu.rpi.cs.csci4963.su20.dzm.pacman;
 
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
+
 import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Point;
 
 public class Pacman {
@@ -19,7 +21,7 @@ public class Pacman {
    	private static int tickCounter = 0;
    	private static boolean running;
 	private static JFrame frame;
-    	private static GUI gui;
+    private static GUI gui;
     
     /**
      * Sets a target tile in the board to a specified type.
@@ -203,6 +205,9 @@ public class Pacman {
         throw new RuntimeException();
     }
 
+    private static void tick() {
+        
+    }
 
     /**
      * Method to call in order to begin the game loop
