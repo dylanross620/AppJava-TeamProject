@@ -1,5 +1,6 @@
 package edu.rpi.cs.csci4963.su20.dzm.pacman;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -252,7 +253,7 @@ public class Pacman {
     private static void initBoard() {
         board = new Tile[36][28];
         
-        try (Scanner scan = new Scanner(new FileInputStream("board.csv"))) {
+        try (Scanner scan = new Scanner(new FileInputStream(".." + File.separator + "res" + File.separator + "board.csv"))) {
             Tile[] values = Tile.values();
 
             for (int row = 0; row < 36; ++row) {

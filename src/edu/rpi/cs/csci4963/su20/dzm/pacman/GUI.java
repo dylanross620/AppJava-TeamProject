@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -281,11 +282,13 @@ public class GUI extends JPanel implements ActionListener {
     * This function loads in the images to represent the pacman and ghosts
     */ 
     private void loadImages() {
-        ghostBlinky = new ImageIcon("blinky.png").getImage();
-        ghostPinky = new ImageIcon("pinky.png").getImage();
-        ghostInky = new ImageIcon("inky.png").getImage();
-        ghostClyde = new ImageIcon("clyde.png").getImage();
-        pacmanImage = new ImageIcon("pacman.png").getImage();
+        String filePath = ".." + File.separator + "res" + File.separator;
+
+        ghostBlinky = new ImageIcon(filePath + "blinky.png").getImage();
+        ghostPinky = new ImageIcon(filePath + "pinky.png").getImage();
+        ghostInky = new ImageIcon(filePath + "inky.png").getImage();
+        ghostClyde = new ImageIcon(filePath + "clyde.png").getImage();
+        pacmanImage = new ImageIcon(filePath + "pacman.png").getImage();
     }
 
     @Override
