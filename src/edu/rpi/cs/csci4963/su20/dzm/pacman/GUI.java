@@ -170,6 +170,23 @@ public class GUI extends JPanel implements ActionListener {
     /**
     * This function draws the ghosts using their x and y coordinates
     * @param g2d Graphics2D
+    */ 
+    private void drawGhost(Graphics2D g2d) {
+        Point loc = getPlayerPos();
+        g2d.drawImage(ghost, loc.col, loc.row, this);
+    }
+
+    /**
+    * This function draws pacman as he moves
+    * @param g2d Graphics2D
+    */ 
+    private void drawPacman(Graphics2D g2d) {
+        //g2d.drawImage(pacmanImage, x, y, this);
+    }
+
+    /**
+    * This function draws the ghosts using their x and y coordinates
+    * @param g2d Graphics2D
     * @param x the x index to draw the ghost at
     * @param y the y index to draw the ghost at
     */ 
@@ -270,9 +287,11 @@ public class GUI extends JPanel implements ActionListener {
         drawScore(g2d);
 
         if (inGame) {
-            drawPacman(g2d, 0, 0);
-            drawGhost(g2d, 0, 0);
+            drawPacman(g2d);
+            drawGhost(g2d);
         } else {
+            drawPacman(g2d, 260, 520);
+            drawGhost(g2d, 260, 320);
             showIntroScreen(g2d);
         }
 
@@ -293,9 +312,7 @@ public class GUI extends JPanel implements ActionListener {
                 inGame = true;
                 initGame();
             }
-            
         }
-
     }
 
     @Override
