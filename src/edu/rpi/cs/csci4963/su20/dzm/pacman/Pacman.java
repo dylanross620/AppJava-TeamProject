@@ -142,7 +142,6 @@ public class Pacman {
     		gainedScore += this.POINT_SCORES;
     	}
     	this.location = new Point(x,y);
-    	gui.repaint();
     	scores += gainedScore;
     	return gainedScore;
     }
@@ -179,6 +178,7 @@ public class Pacman {
 
     private static void tick() {
         //TODO
+	gui.repaint();
         throw new RuntimeException();
     }
 
