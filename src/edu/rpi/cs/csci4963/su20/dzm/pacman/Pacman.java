@@ -246,6 +246,11 @@ public class Pacman {
     	return movePacman(location.row, location.col+1, ghostPos);
     }
 
+    /**
+     * Set the player to move in a specified direction.
+     * The direction should be one of the constant points defined in the Point class
+     * @param dir the new direction for the player
+     */
     public static void setPlayerDirection(Point dir) {
         direction = dir;
     }
