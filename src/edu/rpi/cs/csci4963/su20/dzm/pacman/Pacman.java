@@ -10,11 +10,13 @@ public class Pacman {
 	private final int FRUIT_SCORES = 30;
 	private final int ENERGIZER_SCORES = 50;
 	private final int ENERGIZER_LAST_TICKS = 3;
+	private final int MOVE_GAP = 5;
 	private static int energizedCounter = 0;
 	private static int scores = 0;
   	private static Tile[][] board;
   	private static Point direction;
    	private static Point location;
+   	private static int tickCounter = 0;
    	private static boolean running;
 	private static JFrame frame;
     	private static GUI gui;
@@ -114,6 +116,13 @@ public class Pacman {
     	if(!this.isLegalPlayerMove(x, y)) {
     		return 0;
     	}
+    	if(this.tickCounter < this.MOVE_GAP) {
+    		this.tickCounter ++;
+    		return 0;
+    	}
+    	else {
+    		this.tickCounter =0;
+    	}
     	for(int i = 0; i < ghostPos.size();i++) {
     		Point tempGhostPos = ghostPos.get(i);   
 //    		If pacman dies.
@@ -153,18 +162,36 @@ public class Pacman {
      * the method required input the location of the all ghost
      * 
      */
+    
+    /**
+     * 
+     * @param ghostPos location of all ghosts
+     * @return new gained scores
+     */
     public int moveUp(ArrayList<Point> ghostPos) {
     	this.direction = Point.UP;
     	return this.movePacman(this.location.row+1, this.location.col, ghostPos);
     }
+    /**
+     * @param ghostPos location of all ghosts
+     * @return new gained scores
+     */
     public int moveDown(ArrayList<Point> ghostPos) {
     	this.direction = Point.DOWN;
     	return this.movePacman(this.location.row-1, this.location.col, ghostPos);
     }
+    /**
+     * @param ghostPos location of all ghosts
+     * @return new gained scores
+     */
     public int moveLeft(ArrayList<Point> ghostPos) {
     	this.direction = Point.LEFT;
     	return this.movePacman(this.location.row, this.location.col-1, ghostPos);
     }
+    /**
+     * @param ghostPos location of all ghosts
+     * @return new gained scores
+     */
     public int moveRight(ArrayList<Point> ghostPos) {
     	this.direction = Point.RIGHT;
     	return this.movePacman(this.location.row, this.location.col+1, ghostPos);
@@ -176,11 +203,6 @@ public class Pacman {
         throw new RuntimeException();
     }
 
-    private static void tick() {
-        //TODO
-	gui.repaint();
-        throw new RuntimeException();
-    }
 
     /**
      * Method to call in order to begin the game loop
