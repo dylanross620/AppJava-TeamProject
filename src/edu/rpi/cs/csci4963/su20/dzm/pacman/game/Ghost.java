@@ -14,7 +14,7 @@ public abstract class Ghost {
     protected int moveGap;
     private int tickCounter;
 
-    protected Point curPos;
+    protected Point curPos, startPos;
     private Point prevPos, mustMove;
 
     protected GhostMode curMode;
@@ -38,6 +38,7 @@ public abstract class Ghost {
         tickCounter = 0;
 
         this.curPos = curPos;
+        startPos = curPos;
         prevPos = curPos;
 
         leftHouse = !inHouse;
@@ -52,6 +53,12 @@ public abstract class Ghost {
     public void die() {
         isDead = true;
         leftHouse = false;
+    }
+
+    public void reset() {
+        curPos = startPos;
+        prevPos = startPos;
+        leftHouse = Pacman.getBoardPos(curPos.row, curPos.col) != Tile.GHOST_HOUSE;
     }
 
     /**

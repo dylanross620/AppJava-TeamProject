@@ -6,6 +6,11 @@ import java.util.Scanner;
 
 import javax.swing.JFrame;
 
+import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Blinky;
+import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Clyde;
+import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Ghost;
+import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Inky;
+import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Pinky;
 import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Point;
 
 public class Pacman {
@@ -29,6 +34,44 @@ public class Pacman {
    	private static boolean running;
 	private static JFrame frame;
     private static GUI gui;
+
+    private static Blinky blinky;
+    private static Clyde clyde;
+    private static Inky inky;
+    private static Pinky pinky;
+    private static Ghost[] ghosts;
+
+    /**
+     * Get the game's blinky instance
+     * @return the instance of blinky
+     */
+    public static Blinky getBlinky() {
+        return blinky;
+    }
+
+    /**
+     * Get the game's clyde instance
+     * @return the instance of clyde
+     */
+    public static Clyde getClyde() {
+        return clyde;
+    }
+
+    /**
+     * Get the game's inky instance
+     * @return the instance of inky
+     */
+    public static Inky getInky() {
+        return inky;
+    }
+
+    /**
+     * Get the game's pinky instance
+     * @return the instance of pinky
+     */
+    public static Pinky getPinky() {
+        return pinky;
+    }
     
     /**
      * Sets a target tile in the board to a specified type.
@@ -38,7 +81,7 @@ public class Pacman {
      * @param col the column of the target tile
      * @param newTile the new type for the target tile
      */
-    public static void setBoardPos(int row, int col, Tile newTile) {
+    private static void setBoardPos(int row, int col, Tile newTile) {
         if (row < 0 || row >= board.length || col < 0 || col >= board[0].length)
             return;
         
@@ -227,8 +270,31 @@ public class Pacman {
         }
     }
 
-    private static void tick() {
+    private static void initGame() {
+        initBoard();
 
+        blinky = new Blinky(new Point(14, 13));
+        clyde = new Clyde(new Point(17, 15));
+        inky = new Inky(new Point(17, 11), blinky);
+        pinky = new Pinky(new Point(17, 13));
+
+        ghosts = new Ghost[] {blinky, clyde, inky, pinky};
+    }
+
+    private static void tick() {
+        //TODO move pacman (idk how that method is supposed to work)
+
+        for (Ghost g : ghosts) {
+            if (g.getPosition().equals(location)) {
+                //Kill pacman
+            }
+            g.tick();
+            if (g.getPosition().equals(location)) {
+                //Kill pacman
+            }
+        }
+
+        //Redraw screen
     }
 
     /**
@@ -249,7 +315,7 @@ public class Pacman {
     }
 
     public static void main(String[] args) {
-        initBoard();
+        initGame();
 
         frame = new JFrame();
         gui = new GUI();
@@ -261,9 +327,6 @@ public class Pacman {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.setResizable(false);
-        
-        System.out.println("Test");
-        System.out.println("Commmit Test");
     }
 
 }
