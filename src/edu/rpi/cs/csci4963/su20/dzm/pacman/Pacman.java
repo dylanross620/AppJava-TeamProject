@@ -21,11 +21,11 @@ public class Pacman {
      */
     public static final int MAX_SCORE = 2600;
 	
-	private final int POINT_SCORES = 10;
-	private final int FRUIT_SCORES = 30;
-	private final int ENERGIZER_SCORES = 50;
-	private final int ENERGIZER_LAST_TICKS = 3;
-	private final int MOVE_GAP = 5;
+	private static final int POINT_SCORES = 10;
+	private static final int FRUIT_SCORES = 30;
+	private static final int ENERGIZER_SCORES = 50;
+	private static final int ENERGIZER_LAST_TICKS = 3;
+	private static final int MOVE_GAP = 5;
 	private static int energizedCounter = 0;
 	private static int scores = 0;
   	private static Tile[][] board;
@@ -164,46 +164,46 @@ public class Pacman {
      * @return zero and positive for the score gained on this move
      * 			-1 if the pacman is eaten by the ghost
      */
-    private int movePacman(int x, int y, ArrayList<Point> ghostPos) {
+    private static int movePacman(int x, int y, ArrayList<Point> ghostPos) {
     	
-    	if(!this.isLegalPlayerMove(x, y)) {
+    	if(!isLegalPlayerMove(x, y)) {
     		return 0;
     	}
-    	if(this.tickCounter < this.MOVE_GAP) {
-    		this.tickCounter ++;
+    	if(tickCounter < MOVE_GAP) {
+    		tickCounter ++;
     		return 0;
     	}
     	else {
-    		this.tickCounter =0;
+    		tickCounter =0;
     	}
     	for(int i = 0; i < ghostPos.size();i++) {
     		Point tempGhostPos = ghostPos.get(i);   
 //    		If pacman dies.
-    		if((tempGhostPos.equals(this.location))&&(this.energizedCounter > 0)) {
-				this.location = new Point(27,14);
+    		if((tempGhostPos.equals(location))&&(energizedCounter > 0)) {
+				location = new Point(27,14);
     				return -1;
     		}
     	}
-    	if(this.energizedCounter > 0) {
-    		this.energizedCounter -= 1;
+    	if(energizedCounter > 0) {
+    		energizedCounter -= 1;
     	}
     	int gainedScore = 0;
-    	Tile tempTile = this.board[x][y];
+    	Tile tempTile = board[x][y];
     	if(tempTile == Tile.ENERGIZER) {
-    		gainedScore += this.ENERGIZER_SCORES;
-    		this.energizedCounter = this.ENERGIZER_LAST_TICKS;
+    		gainedScore += ENERGIZER_SCORES;
+    		energizedCounter = ENERGIZER_LAST_TICKS;
     	}
     	else if(tempTile == Tile.FRUIT) {
-    		gainedScore += this.FRUIT_SCORES;
+    		gainedScore += FRUIT_SCORES;
     	}
 //    	both wall and ghost house are not allowed to enter
     	else if(tempTile == Tile.WALL||tempTile == Tile.GHOST_HOUSE) {
     		return gainedScore;
     	}
     	else if(tempTile == Tile.POINT) {
-    		gainedScore += this.POINT_SCORES;
+    		gainedScore += POINT_SCORES;
     	}
-    	this.location = new Point(x,y);
+    	location = new Point(x,y);
     	scores += gainedScore;
     	return gainedScore;
     }
@@ -221,33 +221,33 @@ public class Pacman {
      * @param ghostPos location of all ghosts
      * @return new gained scores
      */
-    public int moveUp(ArrayList<Point> ghostPos) {
-    	this.direction = Point.UP;
-    	return this.movePacman(this.location.row+1, this.location.col, ghostPos);
+    public static int moveUp(ArrayList<Point> ghostPos) {
+    	return movePacman(location.row-1, location.col, ghostPos);
     }
     /**
      * @param ghostPos location of all ghosts
      * @return new gained scores
      */
-    public int moveDown(ArrayList<Point> ghostPos) {
-    	this.direction = Point.DOWN;
-    	return this.movePacman(this.location.row-1, this.location.col, ghostPos);
+    public static int moveDown(ArrayList<Point> ghostPos) {
+    	return movePacman(location.row+1, location.col, ghostPos);
     }
     /**
      * @param ghostPos location of all ghosts
      * @return new gained scores
      */
-    public int moveLeft(ArrayList<Point> ghostPos) {
-    	this.direction = Point.LEFT;
-    	return this.movePacman(this.location.row, this.location.col-1, ghostPos);
+    public static int moveLeft(ArrayList<Point> ghostPos) {
+    	return movePacman(location.row, location.col-1, ghostPos);
     }
     /**
      * @param ghostPos location of all ghosts
      * @return new gained scores
      */
-    public int moveRight(ArrayList<Point> ghostPos) {
-    	this.direction = Point.RIGHT;
-    	return this.movePacman(this.location.row, this.location.col+1, ghostPos);
+    public static int moveRight(ArrayList<Point> ghostPos) {
+    	return movePacman(location.row, location.col+1, ghostPos);
+    }
+
+    public static void setPlayerDirection(Point dir) {
+        direction = dir;
     }
 
     private static void initBoard() {
@@ -282,11 +282,25 @@ public class Pacman {
         ghosts = new Ghost[] {blinky, clyde, inky, pinky};
 
         location = new Point(27, 14);
+        direction = Point.UP;
     }
 
     private static void tick() {
-        //TODO move pacman (idk how that method is supposed to work)
+        //Move pacman
+        ArrayList<Point> ghostPos = new ArrayList<Point>(4);
+        for (Ghost g : ghosts)
+            ghostPos.add(g.getPosition());
 
+        if (direction == Point.UP)
+            moveUp(ghostPos);
+        else if (direction == Point.LEFT)
+            moveLeft(ghostPos);
+        else if (direction == Point.DOWN)
+            moveDown(ghostPos);
+        else
+            moveRight(ghostPos);
+
+        //Move ghosts
         for (Ghost g : ghosts) {
             if (g.getPosition().equals(location)) {
                 //Kill pacman
@@ -298,6 +312,7 @@ public class Pacman {
         }
 
         //Redraw screen
+        gui.repaint();
     }
 
     /**

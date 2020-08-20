@@ -1,11 +1,8 @@
 package edu.rpi.cs.csci4963.su20.dzm.pacman;
 
-import java.awt.EventQueue;
-import javax.swing.JFrame;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Event;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -23,7 +20,6 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Point;
-import edu.rpi.cs.csci4963.su20.dzm.pacman.Pacman;
 
 public class GUI extends JPanel implements ActionListener {
 
@@ -333,7 +329,16 @@ public class GUI extends JPanel implements ActionListener {
             if (key == 's' || key == 'S') {
                 inGame = true;
                 initGame();
+                new Thread(() -> Pacman.runGame()).start();
             }
+            else if (key == KeyEvent.VK_RIGHT)
+                Pacman.setPlayerDirection(Point.RIGHT);
+            else if (key == KeyEvent.VK_UP)
+                Pacman.setPlayerDirection(Point.UP);
+            else if (key == KeyEvent.VK_LEFT)
+                Pacman.setPlayerDirection(Point.LEFT);
+            else if (key == KeyEvent.VK_DOWN)
+                Pacman.setPlayerDirection(Point.DOWN);
             
         }
 
