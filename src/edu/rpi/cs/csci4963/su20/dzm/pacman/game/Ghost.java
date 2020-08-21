@@ -142,6 +142,9 @@ public abstract class Ghost {
             int targetRow = curPos.row + diff.row;
             int targetCol = curPos.col + diff.col;
 
+            //Allow wrapping around
+            targetCol = ((targetCol % 28) + 28) % 28;
+
             //Don't allow turning around
             if (prevPos.row == targetRow && prevPos.col == targetCol)
                 continue;
