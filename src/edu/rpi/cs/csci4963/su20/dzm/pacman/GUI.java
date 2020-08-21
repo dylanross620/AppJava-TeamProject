@@ -193,6 +193,9 @@ public class GUI extends JPanel implements ActionListener {
     */ 
     private void drawPacman(Graphics2D g2d) {
         Point loc = Pacman.getPlayerPos();
+        if((screenData[loc.row][loc.col] & 16) != 0){
+            screenData[loc.row][loc.col] = (short)(screenData[loc.row][loc.col] & 15);
+        }
         
         double xScale = getWidth() / 28.0;
         double yScale = getHeight() / 36.0;
