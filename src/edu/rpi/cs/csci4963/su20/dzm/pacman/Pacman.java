@@ -181,18 +181,12 @@ public class Pacman {
     		return 0;
     	}
     	else {
-    		tickCounter =0;
-    	}
-    	for(int i = 0; i < ghostPos.size();i++) {
-    		Point tempGhostPos = ghostPos.get(i);   
-//    		If pacman dies.
-    		if((tempGhostPos.equals(location))&&(energizedCounter > 0)) {
-    			return -1;
-    		}
+    		tickCounter = 0;
     	}
     	if(energizedCounter > 0) {
     		energizedCounter -= 1;
-    	}
+        }
+
     	int gainedScore = 0;
     	Tile tempTile = board[x][y];
     	if(tempTile == Tile.ENERGIZER) {
@@ -209,7 +203,11 @@ public class Pacman {
     	else if(tempTile == Tile.POINT) {
     		gainedScore += POINT_SCORES;
     	}
-    	location = new Point(x,y);
+        location = new Point(x,y);
+        
+        //Remove what we just ate from the board
+        board[x][y] = Tile.EMPTY;
+
     	scores += gainedScore;
     	return gainedScore;
     }
