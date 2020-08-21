@@ -28,7 +28,8 @@ public class Pacman {
 	private static final int ENERGIZER_LAST_TICKS = 3;
 	private static final int MOVE_GAP = 5;
 	private static int energizedCounter = 0;
-	private static int scores = 0;
+    private static int scores = 0;
+    private static int numLives;
   	private static Tile[][] board;
   	private static Point direction;
    	private static Point location;
@@ -186,8 +187,7 @@ public class Pacman {
     		Point tempGhostPos = ghostPos.get(i);   
 //    		If pacman dies.
     		if((tempGhostPos.equals(location))&&(energizedCounter > 0)) {
-				location = new Point(27,14);
-    				return -1;
+    			return -1;
     		}
     	}
     	if(energizedCounter > 0) {
@@ -253,6 +253,14 @@ public class Pacman {
     }
 
     /**
+     * Get the number of lives the player has remaining
+     * @return the number of lives for the player
+     */
+    public static int getNumLives() {
+        return numLives;
+    }
+
+    /**
      * Set the player to move in a specified direction.
      * The direction should be one of the constant points defined in the Point class
      * @param dir the new direction for the player
@@ -297,6 +305,19 @@ public class Pacman {
 
         curModeIndex = 0;
         curModeCount = 0;
+        numLives = 3;
+    }
+
+    private static void playerDeath() {
+        if (--numLives <= 0) {
+            //Stop the game
+            running = false;
+            return;
+        }
+
+        location = new Point(27,14);
+        for (Ghost g : ghosts)
+            g.reset();
     }
 
     private static void tick() {
@@ -326,11 +347,17 @@ public class Pacman {
         //Move ghosts
         for (Ghost g : ghosts) {
             if (g.getPosition().equals(location)) {
-                //Kill pacman
+                if (g.getMode() == GhostMode.FRIGHTENED)
+                    g.die();
+                else 
+                    playerDeath();
             }
             g.tick();
             if (g.getPosition().equals(location)) {
-                //Kill pacman
+                if (g.getMode() == GhostMode.FRIGHTENED)
+                    g.die();
+                else
+                    playerDeath();
             }
         }
 
