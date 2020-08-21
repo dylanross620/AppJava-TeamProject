@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Point;
+import edu.rpi.cs.csci4963.su20.dzm.pacman.Pacman;
 
 public class GUI extends JPanel implements ActionListener {
 
@@ -153,7 +154,7 @@ public class GUI extends JPanel implements ActionListener {
     * This function draws the score in the bottom right corner of the window
     * @param g Graphics2D
     */ 
-    private void drawScore(Graphics2D g) {
+    private void drawScore(Graphics2D g, int score) {
         int i;
         String s;
 
@@ -308,14 +309,15 @@ public class GUI extends JPanel implements ActionListener {
         g2d.fillRect(0, 0, d.width, d.height);
 
         drawMaze(g2d);
-        drawScore(g2d);
 
         if (inGame) {
             drawPacman(g2d);
             drawGhost(g2d);
+            drawScore(g2d, Pacman.getPlayerScore());
         } else {
             drawPacman(g2d, 260, 520);
             drawGhost(g2d, 260, 320);
+            drawScore(g2d, 0);
             showIntroScreen(g2d);
         }
 
