@@ -44,8 +44,10 @@ public class Pacman {
     private static Pinky pinky;
     private static Ghost[] ghosts;
 
+    //Multiply num seconds by 60 to convert to ticks
     private static final int[] MODE_DURATIONS = {7*60, 20*60, 7*60, 20*60, 5*60, 20*60, 5*60};
-    private static int curModeCount, curModeIndex;
+    private static final int FRIGHTENED_DURATION = 3*60;
+    private static int curModeCount, curModeIndex, frightenedCount;
 
     /**
      * Get blinky's location
@@ -191,7 +193,8 @@ public class Pacman {
     	Tile tempTile = board[x][y];
     	if(tempTile == Tile.ENERGIZER) {
     		gainedScore += ENERGIZER_SCORES;
-    		energizedCounter = ENERGIZER_LAST_TICKS;
+            energizedCounter = ENERGIZER_LAST_TICKS;
+            frightenGhosts();
     	}
     	else if(tempTile == Tile.FRUIT) {
     		gainedScore += FRUIT_SCORES;
@@ -210,6 +213,13 @@ public class Pacman {
 
     	scores += gainedScore;
     	return gainedScore;
+    }
+
+    private static void frightenGhosts() {
+        for (Ghost g : ghosts)
+            g.setMode(GhostMode.FRIGHTENED);
+        
+        frightenedCount = 0;
     }
     
     /*
@@ -303,6 +313,8 @@ public class Pacman {
 
         curModeIndex = 0;
         curModeCount = 0;
+        frightenedCount = -1;
+
         numLives = 3;
     }
 
@@ -319,13 +331,19 @@ public class Pacman {
     }
 
     private static void tick() {
-        //Have ghosts change modes on a set timer
-        if (curModeIndex < MODE_DURATIONS.length && MODE_DURATIONS[curModeIndex] <= ++curModeCount) {
-            curModeCount = 0;
-            GhostMode newMode = (++curModeIndex % 2 == 0) ? GhostMode.SCATTER : GhostMode.CHASE;
+        //Have ghosts change modes on a set timer, unless frightened
+        if (frightenedCount >= 0) {
+            if (++frightenedCount >= FRIGHTENED_DURATION)
+                frightenedCount = -1;
+        }
+        else {
+            if (curModeIndex < MODE_DURATIONS.length && MODE_DURATIONS[curModeIndex] <= ++curModeCount) {
+                curModeCount = 0;
+                GhostMode newMode = (++curModeIndex % 2 == 0) ? GhostMode.SCATTER : GhostMode.CHASE;
 
-            for (Ghost g : ghosts)
-                g.setMode(newMode);
+                for (Ghost g : ghosts)
+                    g.setMode(newMode);
+            }
         }
 
         //Move pacman
@@ -344,13 +362,17 @@ public class Pacman {
 
         //Move ghosts
         for (Ghost g : ghosts) {
+            //Check for collision before ghost moves
             if (g.getPosition().equals(location)) {
                 if (g.getMode() == GhostMode.FRIGHTENED)
                     g.die();
                 else 
                     playerDeath();
             }
+
             g.tick();
+
+            //Check for collision after ghost moves. Checking twice prevents player passing through a ghost 
             if (g.getPosition().equals(location)) {
                 if (g.getMode() == GhostMode.FRIGHTENED)
                     g.die();
