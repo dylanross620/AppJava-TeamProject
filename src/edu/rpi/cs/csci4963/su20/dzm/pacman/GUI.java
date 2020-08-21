@@ -39,8 +39,6 @@ public class GUI extends JPanel implements ActionListener {
     private final int SCREEN_HEIGHT = H_BLOCKS * BLOCK_SIZE;
     private final int SCREEN_WIDTH = W_BLOCKS * BLOCK_SIZE;
 
-    private int N_GHOSTS = 3;
-    private int pacsLeft, score;
     private Image ghostBlinky;
     private Image ghostPinky;
     private Image ghostInky;
@@ -162,8 +160,9 @@ public class GUI extends JPanel implements ActionListener {
         g.setColor(new Color(96, 128, 255));
         s = "Score: " + score;
         g.drawString(s, SCREEN_WIDTH / 2 + 96, SCREEN_HEIGHT + 16);
-
-        for (i = 0; i < pacsLeft; i++) {
+        
+        int pacs = Pacman.getPacsLeft();
+        for (i = 0; i < pacs; i++) {
             g.drawImage(pacmanImage, i * 28 + 8, SCREEN_HEIGHT + 1, this);
         }
     }
