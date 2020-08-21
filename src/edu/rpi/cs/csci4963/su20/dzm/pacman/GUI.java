@@ -39,6 +39,7 @@ public class GUI extends JPanel implements ActionListener {
     private final int SCREEN_HEIGHT = H_BLOCKS * BLOCK_SIZE;
     private final int SCREEN_WIDTH = W_BLOCKS * BLOCK_SIZE;
 
+    private int score = 0;
     private Image ghostBlinky;
     private Image ghostPinky;
     private Image ghostInky;
@@ -152,7 +153,7 @@ public class GUI extends JPanel implements ActionListener {
     * This function draws the score in the bottom right corner of the window
     * @param g Graphics2D
     */ 
-    private void drawScore(Graphics2D g, int score) {
+    private void drawScore(Graphics2D g) {
         int i;
         String s;
 
@@ -160,7 +161,6 @@ public class GUI extends JPanel implements ActionListener {
         g.setColor(new Color(96, 128, 255));
         s = "Score: " + score;
         g.drawString(s, SCREEN_WIDTH / 2 + 96, SCREEN_HEIGHT + 16);
-        
         int pacs = Pacman.getPacsLeft();
         for (i = 0; i < pacs; i++) {
             g.drawImage(pacmanImage, i * 28 + 8, SCREEN_HEIGHT + 1, this);
@@ -195,8 +195,9 @@ public class GUI extends JPanel implements ActionListener {
         Point loc = Pacman.getPlayerPos();
         if((screenData[loc.row][loc.col] & 16) != 0){
             screenData[loc.row][loc.col] = (short)(screenData[loc.row][loc.col] & 15);
+            score++;
         }
-        
+
         double xScale = getWidth() / 28.0;
         double yScale = getHeight() / 36.0;
 
@@ -273,8 +274,6 @@ public class GUI extends JPanel implements ActionListener {
     * This function defines the screen data board
     */ 
     private void initGame() {
-        pacsLeft = 3;
-        score = 0;
         int i, j;
         for (i = 0; i < H_BLOCKS; i++) {
             for(j = 0; j < W_BLOCKS; j++){
@@ -311,15 +310,14 @@ public class GUI extends JPanel implements ActionListener {
         g2d.fillRect(0, 0, d.width, d.height);
 
         drawMaze(g2d);
+        drawScore(g2d);
 
         if (inGame) {
             drawPacman(g2d);
             drawGhost(g2d);
-            drawScore(g2d, Pacman.getPlayerScore());
         } else {
             drawPacman(g2d, 260, 520);
             drawGhost(g2d, 260, 320);
-            drawScore(g2d, 0);
             showIntroScreen(g2d);
         }
 
@@ -382,5 +380,3 @@ public class GUI extends JPanel implements ActionListener {
         repaint();
     }
 }
-
-
