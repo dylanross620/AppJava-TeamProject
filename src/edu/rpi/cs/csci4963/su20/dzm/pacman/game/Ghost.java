@@ -86,7 +86,7 @@ public abstract class Ghost {
         curMode = newMode;
 
         //If changing modes out of chase or scatter, the ghost must turn around
-        if (tmp == GhostMode.CHASE || tmp == GhostMode.SCATTER)
+        if (!isDead && (tmp == GhostMode.CHASE || tmp == GhostMode.SCATTER))
             mustMove = prevPos;
     }
 

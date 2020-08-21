@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Blinky;
 import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Clyde;
 import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Ghost;
+import edu.rpi.cs.csci4963.su20.dzm.pacman.game.GhostMode;
 import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Inky;
 import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Pinky;
 import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Point;
@@ -41,6 +42,9 @@ public class Pacman {
     private static Inky inky;
     private static Pinky pinky;
     private static Ghost[] ghosts;
+
+    private static final int[] MODE_DURATIONS = {7*60, 20*60, 7*60, 20*60, 5*60, 20*60, 5*60};
+    private static int curModeCount, curModeIndex;
 
     /**
      * Get blinky's location
@@ -288,9 +292,21 @@ public class Pacman {
 
         location = new Point(27, 14);
         direction = Point.UP;
+
+        curModeIndex = 0;
+        curModeCount = 0;
     }
 
     private static void tick() {
+        //Have ghosts change modes on a set timer
+        if (curModeIndex < MODE_DURATIONS.length && MODE_DURATIONS[curModeIndex] >= ++curModeCount) {
+            curModeCount = 0;
+            GhostMode newMode = (++curModeIndex % 2 == 0) ? GhostMode.SCATTER : GhostMode.CHASE;
+
+            for (Ghost g : ghosts)
+                g.setMode(newMode);
+        }
+
         //Move pacman
         ArrayList<Point> ghostPos = new ArrayList<Point>(4);
         for (Ghost g : ghosts)
