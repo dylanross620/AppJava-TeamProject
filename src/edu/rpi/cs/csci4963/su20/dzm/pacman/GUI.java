@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Point;
+import edu.rpi.cs.csci4963.su20.dzm.pacman.Pacman;
 
 public class GUI extends JPanel implements ActionListener {
 
@@ -312,7 +313,7 @@ public class GUI extends JPanel implements ActionListener {
         if (inGame) {
             drawPacman(g2d);
             drawGhost(g2d);
-            drawScore(g2d, getPlayerScore());
+            drawScore(g2d, Pacman.getPlayerScore());
         } else {
             drawPacman(g2d, 260, 520);
             drawGhost(g2d, 260, 320);
