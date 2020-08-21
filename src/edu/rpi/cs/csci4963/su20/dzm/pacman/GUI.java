@@ -337,14 +337,36 @@ public class GUI extends JPanel implements ActionListener {
                 initGame();
                 new Thread(() -> Pacman.runGame()).start();
             }
-            else if (key == KeyEvent.VK_RIGHT)
-                Pacman.setPlayerDirection(Point.RIGHT);
-            else if (key == KeyEvent.VK_UP)
-                Pacman.setPlayerDirection(Point.UP);
-            else if (key == KeyEvent.VK_LEFT)
-                Pacman.setPlayerDirection(Point.LEFT);
-            else if (key == KeyEvent.VK_DOWN)
-                Pacman.setPlayerDirection(Point.DOWN);
+            else if (key == KeyEvent.VK_RIGHT) {
+                Point playerPos = Pacman.getPlayerPos();
+
+                int targetCol = playerPos.col + Point.RIGHT.col;
+                targetCol = ((targetCol % 28) + 28) % 28; //Wrap around
+
+                if (Pacman.isLegalPlayerMove(playerPos.row, targetCol))
+                    Pacman.setPlayerDirection(Point.RIGHT);
+            }
+            else if (key == KeyEvent.VK_UP) {
+                Point playerPos = Pacman.getPlayerPos();
+                
+                if (Pacman.isLegalPlayerMove(playerPos.row + Point.UP.row, playerPos.col))
+                    Pacman.setPlayerDirection(Point.UP);
+            }
+            else if (key == KeyEvent.VK_LEFT) {
+                Point playerPos = Pacman.getPlayerPos();
+
+                int targetCol = playerPos.col + Point.LEFT.col;
+                targetCol = ((targetCol % 28) + 28) % 28; //Wrap around
+
+                if (Pacman.isLegalPlayerMove(playerPos.row, targetCol))
+                    Pacman.setPlayerDirection(Point.LEFT);
+            }
+            else if (key == KeyEvent.VK_DOWN) {
+                Point playerPos = Pacman.getPlayerPos();
+
+                if (Pacman.isLegalPlayerMove(playerPos.row + Point.DOWN.row, playerPos.col))
+                    Pacman.setPlayerDirection(Point.DOWN);
+            }
             
         }
 

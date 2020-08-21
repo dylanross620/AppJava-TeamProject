@@ -140,7 +140,7 @@ public class Pacman {
      * @return the current position of the player
      */
     public static Point getPlayerPos() {
-    	return location;
+    	return new Point(location.row, location.col);
     }
 
     /**
@@ -149,7 +149,7 @@ public class Pacman {
      * @return the player's current direction
      */
     public static Point getPlayerDir() {
-    	return direction;
+    	return new Point(direction.row, direction.col);
     }
 
     /**
@@ -299,7 +299,7 @@ public class Pacman {
 
     private static void tick() {
         //Have ghosts change modes on a set timer
-        if (curModeIndex < MODE_DURATIONS.length && MODE_DURATIONS[curModeIndex] >= ++curModeCount) {
+        if (curModeIndex < MODE_DURATIONS.length && MODE_DURATIONS[curModeIndex] <= ++curModeCount) {
             curModeCount = 0;
             GhostMode newMode = (++curModeIndex % 2 == 0) ? GhostMode.SCATTER : GhostMode.CHASE;
 
@@ -347,8 +347,8 @@ public class Pacman {
         long lastTick = 0;
         while (running) {
             if (System.currentTimeMillis() - lastTick >= tickGap) {
-                lastTick = System.currentTimeMillis();
                 tick();
+                lastTick = System.currentTimeMillis();
             }
         }
     }
