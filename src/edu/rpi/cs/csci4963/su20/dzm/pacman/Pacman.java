@@ -43,35 +43,35 @@ public class Pacman {
     private static Ghost[] ghosts;
 
     /**
-     * Get the game's blinky instance
-     * @return the instance of blinky
+     * Get blinky's location
+     * @return the location of blinky
      */
-    public static Blinky getBlinky() {
-        return blinky;
+    public static Point getBlinkyPos() {
+        return blinky.getPosition();
     }
 
     /**
-     * Get the game's clyde instance
-     * @return the instance of clyde
+     * Get clyde's location
+     * @return the location of clyde
      */
-    public static Clyde getClyde() {
-        return clyde;
+    public static Point getClydePos() {
+        return clyde.getPosition();
     }
 
     /**
-     * Get the game's inky instance
-     * @return the instance of inky
+     * Get inky's location
+     * @return the location of inky
      */
-    public static Inky getInky() {
-        return inky;
+    public static Point getInkyPos() {
+        return inky.getPosition();
     }
 
     /**
-     * Get the game's pinky instance
-     * @return the instance of pinky
+     * Get pinky's location
+     * @return the location of pinky
      */
-    public static Pinky getPinky() {
-        return pinky;
+    public static Point getPinkyPos() {
+        return pinky.getPosition();
     }
     
     /**

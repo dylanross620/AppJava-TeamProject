@@ -172,16 +172,18 @@ public class GUI extends JPanel implements ActionListener {
     * @param g2d Graphics2D
     */ 
     private void drawGhost(Graphics2D g2d) {
-        /*
-        Point locBlinky = Clyde.getPosition();
-        Point locPinky = Clyde.getPosition();
-        Point locClyde = Clyde.getPosition();
-        Point locInky = Clyde.getPosition();
+        Point locBlinky = Pacman.getBlinkyPos();
+        Point locPinky = Pacman.getPinkyPos();
+        Point locClyde = Pacman.getClydePos();
+        Point locInky = Pacman.getInkyPos();
 
-        g2d.drawImage(ghostBlinky, locBlinky.col, locBlinky.row, this);
-        g2d.drawImage(ghostPinky, locPinky.col, locPinky.row, this);
-        g2d.drawImage(ghostClyde, locClyde.col, locClyde.row, this);
-        g2d.drawImage(ghostInky, locInky.col, locInky.row, this);*/
+        double xScale = getWidth() / 28.0;
+        double yScale = getHeight() / 36.0;
+
+        g2d.drawImage(ghostBlinky, (int) (locBlinky.col * xScale), (int) (locBlinky.row * yScale), this);
+        g2d.drawImage(ghostPinky, (int) (locPinky.col * xScale), (int) (locPinky.row * yScale), this);
+        g2d.drawImage(ghostClyde, (int) (locClyde.col * xScale), (int) (locClyde.row * yScale), this);
+        g2d.drawImage(ghostInky, (int) (locInky.col * xScale), (int) (locInky.row * yScale), this);
     }
     
 
@@ -191,7 +193,11 @@ public class GUI extends JPanel implements ActionListener {
     */ 
     private void drawPacman(Graphics2D g2d) {
         Point loc = Pacman.getPlayerPos();
-        g2d.drawImage(pacmanImage, loc.col, loc.row, this);
+        
+        double xScale = getWidth() / 28.0;
+        double yScale = getHeight() / 36.0;
+
+        g2d.drawImage(pacmanImage, (int) (loc.col * xScale), (int) (loc.row * yScale), this);
     }
 
     /**
