@@ -169,6 +169,8 @@ public class Pacman {
      * 			-1 if the pacman is eaten by the ghost
      */
     private static int movePacman(int x, int y, ArrayList<Point> ghostPos) {
+        //Allow wrapping around horizontally (go through tunnel)
+        y = ((y % 28) + 28) % 28;
     	
     	if(!isLegalPlayerMove(x, y)) {
     		return 0;
