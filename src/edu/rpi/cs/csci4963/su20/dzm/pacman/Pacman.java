@@ -36,7 +36,8 @@ public class Pacman {
    	private static int tickCounter = 0;
    	private static boolean running;
 	private static JFrame frame;
-    private static GUI gui;
+    	private static GUI gui;
+    	private static int pacsLeft = 3;
 
     private static Blinky blinky;
     private static Clyde clyde;
@@ -161,6 +162,14 @@ public class Pacman {
      */
     public static int getPlayerScore() {
     	return scores;
+    }
+	
+     /**
+     * Get the player's amount of lives
+     * @return the current score of the player
+     */
+    public static int getPacsLeft() {
+        return pacsLeft;
     }
 
     /**
@@ -366,8 +375,10 @@ public class Pacman {
             if (g.getPosition().equals(location)) {
                 if (g.getMode() == GhostMode.FRIGHTENED)
                     g.die();
-                else 
+                else{
+		    pacsLeft--;
                     playerDeath();
+		}
             }
 
             g.tick();
@@ -376,8 +387,10 @@ public class Pacman {
             if (g.getPosition().equals(location)) {
                 if (g.getMode() == GhostMode.FRIGHTENED)
                     g.die();
-                else
+                else{
+		    pacsLeft--;
                     playerDeath();
+		}
             }
         }
 
