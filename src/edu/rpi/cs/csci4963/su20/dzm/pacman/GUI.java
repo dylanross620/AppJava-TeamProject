@@ -276,10 +276,10 @@ public class GUI extends JPanel implements ActionListener {
     * @param g2d Graphics2D
     */ 
     private void drawEnergizers(Graphics2D g2d) {
-        g2d.drawImage(energizer1, 1 * BLOCK_SIZE, 6 * BLOCK_SIZE, this);
-        g2d.drawImage(energizer2, 26 * BLOCK_SIZE, 6 * BLOCK_SIZE, this);
-        g2d.drawImage(energizer3, 1 * BLOCK_SIZE, 26 * BLOCK_SIZE, this);
-        g2d.drawImage(energizer4, 26 * BLOCK_SIZE, 26 * BLOCK_SIZE, this);
+        g2d.drawImage(energizer1, 1 * BLOCK_SIZE+5, 6 * BLOCK_SIZE+5, this);
+        g2d.drawImage(energizer2, 26 * BLOCK_SIZE+5, 6 * BLOCK_SIZE+5, this);
+        g2d.drawImage(energizer3, 1 * BLOCK_SIZE+5, 26 * BLOCK_SIZE+5, this);
+        g2d.drawImage(energizer4, 26 * BLOCK_SIZE+5, 26 * BLOCK_SIZE+5, this);
     }
 
 
