@@ -44,6 +44,7 @@ public class GUI extends JPanel implements ActionListener {
     private Image ghostInky;
     private Image ghostClyde;
     private Image pacmanImage;
+    private Image scaredGhost;
 
     private final short levelData[][] = {
         { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
@@ -283,6 +284,7 @@ public class GUI extends JPanel implements ActionListener {
         ghostInky = new ImageIcon(filePath + "inky.png").getImage();
         ghostClyde = new ImageIcon(filePath + "clyde.png").getImage();
         pacmanImage = new ImageIcon(filePath + "pacman.png").getImage();
+        scaredGhost = new ImageIcon(filePath + "scaredGhost.png").getImage();
     }
 
     @Override
