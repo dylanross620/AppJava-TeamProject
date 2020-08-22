@@ -56,6 +56,7 @@ public class GUI extends JPanel implements ActionListener {
     private Image energizer2;
     private Image energizer3;
     private Image energizer4;
+    private Image emptyEnergizer;
 
     private final short levelData[][] = {
         { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
@@ -234,6 +235,15 @@ public class GUI extends JPanel implements ActionListener {
             screenData[loc.row][loc.col] = (short)(screenData[loc.row][loc.col] & 15);
             score++;
         }
+        if(loc.row == 6 && loc.col == 1){
+            energizer1 = emptyEnergizer;  
+        } else if(loc.row == 6 && loc.col == 26){
+            energizer2 = emptyEnergizer;
+        } else if(loc.row == 26 && loc.col == 1){
+            energizer3 = emptyEnergizer;
+        } else if(loc.row == 26 && loc.col == 26){
+            energizer4 = emptyEnergizer;
+        }
 
         g2d.drawImage(pacmanImage, loc.col * BLOCK_SIZE, loc.row * BLOCK_SIZE, this);
     }
@@ -259,6 +269,17 @@ public class GUI extends JPanel implements ActionListener {
     */ 
     private void drawPacman(Graphics2D g2d, int x, int y) {
         g2d.drawImage(pacmanImage, x, y, this);
+    }
+    
+    /**
+    * This function draws the energizers
+    * @param g2d Graphics2D
+    */ 
+    private void drawEnergizers(Graphics2D g2d) {
+        g2d.drawImage(energizer1, 6 * BLOCK_SIZE, 1 * BLOCK_SIZE, this);
+        g2d.drawImage(energizer2, 6 * BLOCK_SIZE, 26 * BLOCK_SIZE, this);
+        g2d.drawImage(energizer3, 26 * BLOCK_SIZE, 1 * BLOCK_SIZE, this);
+        g2d.drawImage(energizer4, 26 * BLOCK_SIZE, 26 * BLOCK_SIZE, this);
     }
 
 
@@ -333,6 +354,7 @@ public class GUI extends JPanel implements ActionListener {
         energizer2 = new ImageIcon(filePath + "energizers.png").getImage();
         energizer3 = new ImageIcon(filePath + "energizers.png").getImage();
         energizer4 = new ImageIcon(filePath + "energizers.png").getImage();
+        emptyEnergizer = new ImageIcon(filePath + "emptyEnergizer.png").getImage();
     }
 
     @Override
@@ -355,10 +377,12 @@ public class GUI extends JPanel implements ActionListener {
         if (inGame) {
             drawPacman(g2d);
             drawGhost(g2d);
+            drawEnergizers(g2d);
         } else {
             drawPacman(g2d, 260, 520);
             drawGhost(g2d, 260, 320);
             showIntroScreen(g2d);
+            drawEnergizers(g2d);
         }
 
         g2d.drawImage(ii, 5, 5, this);
