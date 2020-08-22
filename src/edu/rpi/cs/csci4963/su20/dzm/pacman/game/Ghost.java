@@ -12,28 +12,47 @@ import edu.rpi.cs.csci4963.su20.dzm.pacman.Tile;
  */
 public abstract class Ghost {
 
+    /**
+     * Number of ticks to skip between each movement
+     */
     protected int moveGap;
     private int tickCounter;
 
+    /**
+     * Current position and starting position of the ghost
+     */
     protected Point curPos, startPos;
     private Point prevPos, mustMove;
 
+    /**
+     * Current mode of the ghost
+     */
     protected GhostMode curMode;
     private boolean leftHouse, isDead;
 
     //Order to check potential moves in. Because of strictly less distance checking, also is the move priority order
     private final Point[] checkOrder = {Point.UP, Point.LEFT, Point.DOWN, Point.RIGHT};
 
-    //Middle of board location for ghosts to return to if they are dead
-    protected final Point revivePoint = new Point(17, 14);
+    /**
+     * Middle of board location for ghosts to return to if they are dead
+     */
+    protected final Point revivePoint = new Point(18, 14);
 
     //Points where ghosts cannot go upwards. There are 4 on the map
     private final Point[] noUpPoints = {new Point(14, 12), new Point(14, 15), new Point(26, 12), new Point(26, 15)};
 
-    //Get the target location for movement decision making
+    /**
+     * Calculate the ghost's current movement target
+     * @return the current target
+     */
     protected abstract Point getTarget();
 
     //Protected constructor so it can be called by the ghosts themselves, but not anything else
+    /**
+     * Initialize a new ghost
+     * @param curPos the starting position of the ghost
+     * @param inHouse whether or not the ghost is starting inside the ghost house
+     */
     protected Ghost(Point curPos, boolean inHouse) {
         moveGap = 6;
         tickCounter = 0;
@@ -182,7 +201,7 @@ public abstract class Ghost {
         //Ghosts can never be in the ghost house and be dead since they revive upon entering it
         if (Pacman.getBoardPos(curPos.row, curPos.col) == Tile.GHOST_HOUSE)
             isDead = false;
-        else
+        else if (!isDead)
             leftHouse = true;
     }
 
