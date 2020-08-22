@@ -21,6 +21,7 @@ import javax.swing.Timer;
 
 import edu.rpi.cs.csci4963.su20.dzm.pacman.game.GhostMode;
 import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Point;
+import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Ghost;
 
 public class GUI extends JPanel implements ActionListener {
 
