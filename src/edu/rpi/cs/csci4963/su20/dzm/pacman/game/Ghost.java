@@ -161,7 +161,7 @@ public abstract class Ghost {
 
         if (potentialPoints.size() == 1)
             curPos = potentialPoints.get(0);
-        else if (curMode == GhostMode.FRIGHTENED) //Select random turn if frightened
+        else if (curMode == GhostMode.FRIGHTENED && !getIsDead()) //Select random turn if frightened
             curPos = potentialPoints.get((int) (Math.random() * potentialPoints.size()));
         else {
             //Find move that gets closest to target with order of preference being up, left, down, right in ties
