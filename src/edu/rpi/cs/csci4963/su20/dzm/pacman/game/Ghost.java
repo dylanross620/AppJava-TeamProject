@@ -124,7 +124,13 @@ public abstract class Ghost {
      */
     public void tick() {
         //Only move every moveGap ticks. Allows customizing ghost speeds (notably for Cruise Elroy mode for Blinkey)
-        if (++tickCounter >= moveGap) {
+        int effectiveTicks = ++tickCounter;
+
+        //Slow down if frightened
+        if (curMode == GhostMode.FRIGHTENED && !isDead)
+            effectiveTicks = (int) (effectiveTicks * .75);
+
+        if (effectiveTicks >= moveGap) {
             tickCounter = 0;
 
             move();
