@@ -173,13 +173,10 @@ public class GUI extends JPanel implements ActionListener {
         Point locClyde = Pacman.getClydePos();
         Point locInky = Pacman.getInkyPos();
 
-        double xScale = getWidth() / 28.0;
-        double yScale = getHeight() / 36.0;
-
-        g2d.drawImage(ghostBlinky, (int) (locBlinky.col * xScale), (int) (locBlinky.row * yScale), this);
-        g2d.drawImage(ghostPinky, (int) (locPinky.col * xScale), (int) (locPinky.row * yScale), this);
-        g2d.drawImage(ghostClyde, (int) (locClyde.col * xScale), (int) (locClyde.row * yScale), this);
-        g2d.drawImage(ghostInky, (int) (locInky.col * xScale), (int) (locInky.row * yScale), this);
+        g2d.drawImage(ghostBlinky, locBlinky.col * BLOCK_SIZE, locBlinky.row * BLOCK_SIZE, this);
+        g2d.drawImage(ghostPinky, locPinky.col * BLOCK_SIZE, locPinky.row * BLOCK_SIZE, this);
+        g2d.drawImage(ghostClyde, locClyde.col * BLOCK_SIZE, locClyde.row * BLOCK_SIZE, this);
+        g2d.drawImage(ghostInky, locInky.col * BLOCK_SIZE, locInky.row * BLOCK_SIZE, this);
     }
     
 
@@ -194,10 +191,7 @@ public class GUI extends JPanel implements ActionListener {
             score++;
         }
 
-        double xScale = getWidth() / 28.0;
-        double yScale = getHeight() / 36.0;
-
-        g2d.drawImage(pacmanImage, (int) (loc.col * xScale), (int) (loc.row * yScale), this);
+        g2d.drawImage(pacmanImage, loc.col * BLOCK_SIZE, loc.row * BLOCK_SIZE, this);
     }
 
     /**
