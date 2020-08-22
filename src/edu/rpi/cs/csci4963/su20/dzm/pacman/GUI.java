@@ -20,7 +20,6 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Point;
-import edu.rpi.cs.csci4963.su20.dzm.pacman.Pacman;
 
 public class GUI extends JPanel implements ActionListener {
 
