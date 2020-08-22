@@ -5,6 +5,7 @@ import edu.rpi.cs.csci4963.su20.dzm.pacman.Pacman;
 /**
  * Class for the Blinky (red) ghost
  * @author Dylan Ross
+ * @version 1.0
  */
 public class Blinky extends Ghost {
 

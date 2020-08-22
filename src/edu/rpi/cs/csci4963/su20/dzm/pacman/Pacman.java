@@ -19,6 +19,7 @@ import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Point;
  * Main class for Pacman game
  * @author Zhangcheng Li
  * @author Dylan Ross
+ * @version 1.0
  */
 public class Pacman {
 

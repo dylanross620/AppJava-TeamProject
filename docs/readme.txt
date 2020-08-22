@@ -11,7 +11,7 @@ The project is structured as follows (relative to the parent directory of this f
 	/src contains the source code
 	/res contains resources used in this project, such as images and csv files
 
-All code was developed and tested on Ubuntu 20.04 LTS and macOS 10.13.6. Windows scripts were written and tested on Windows 10 Education.
+All code was developed and tested on Ubuntu 20.04 LTS and macOS 10.13.6.
 The code was developed and tested using JDK and JRE version 14.01.
 
 To run the program, navigate to the /scripts folder and run the corresponding script for your operating system. 

@@ -4,6 +4,7 @@ package edu.rpi.cs.csci4963.su20.dzm.pacman.game;
  * Helper class to hold and compare 2 integers.
  * All fields and methods are public because this class should not be used for computation, just storage and comparison
  * @author Dylan Ross
+ * @version 1.0
  */
 public class Point {
 

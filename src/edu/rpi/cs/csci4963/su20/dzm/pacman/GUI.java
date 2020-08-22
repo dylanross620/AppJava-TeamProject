@@ -21,8 +21,12 @@ import javax.swing.Timer;
 
 import edu.rpi.cs.csci4963.su20.dzm.pacman.game.GhostMode;
 import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Point;
-import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Ghost;
 
+/**
+ * Main GUI class for Pacman game
+ * @author Margot Rajkovic
+ * @version 1.0
+ */
 public class GUI extends JPanel implements ActionListener {
 
     private Dimension d;
