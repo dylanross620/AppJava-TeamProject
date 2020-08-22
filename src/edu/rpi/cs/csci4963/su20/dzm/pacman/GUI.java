@@ -49,6 +49,10 @@ public class GUI extends JPanel implements ActionListener {
     private Image scaredGhostPinky;
     private Image scaredGhostClyde;
     private Image scaredGhostInky;
+    private Image deadGhostBlinky;
+    private Image deadGhostPinky;
+    private Image deadGhostClyde;
+    private Image deadGhostInky;
 
     private final short levelData[][] = {
         { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
@@ -184,10 +188,26 @@ public class GUI extends JPanel implements ActionListener {
             g2d.drawImage(scaredGhostClyde, locClyde.col * BLOCK_SIZE, locClyde.row * BLOCK_SIZE, this);
             g2d.drawImage(scaredGhostInky, locInky.col * BLOCK_SIZE, locInky.row * BLOCK_SIZE, this);
         } else{
-            g2d.drawImage(ghostBlinky, locBlinky.col * BLOCK_SIZE, locBlinky.row * BLOCK_SIZE, this);
-            g2d.drawImage(ghostPinky, locPinky.col * BLOCK_SIZE, locPinky.row * BLOCK_SIZE, this);
-            g2d.drawImage(ghostClyde, locClyde.col * BLOCK_SIZE, locClyde.row * BLOCK_SIZE, this);
-            g2d.drawImage(ghostInky, locInky.col * BLOCK_SIZE, locInky.row * BLOCK_SIZE, this);
+            if(Pacman.getBlinky()).getIsDead()){
+                g2d.drawImage(deadGhostBlinky, locBlinky.col * BLOCK_SIZE, locBlinky.row * BLOCK_SIZE, this);
+            } else{
+                g2d.drawImage(ghostBlinky, locBlinky.col * BLOCK_SIZE, locBlinky.row * BLOCK_SIZE, this);
+            }
+            if(Pacman.getPinky()).getIsDead()){
+                g2d.drawImage(deadGhostPinky, locPinky.col * BLOCK_SIZE, locPinky.row * BLOCK_SIZE, this);
+            } else{
+                g2d.drawImage(ghostPinky, locPinky.col * BLOCK_SIZE, locPinky.row * BLOCK_SIZE, this);
+            }
+            if(Pacman.getClyde()).getIsDead()){
+                g2d.drawImage(deadGhostClyde, locClyde.col * BLOCK_SIZE, locClyde.row * BLOCK_SIZE, this);
+            } else{
+                g2d.drawImage(ghostClyde, locClyde.col * BLOCK_SIZE, locClyde.row * BLOCK_SIZE, this);
+            }
+            if(Pacman.getInky().getIsDead()){
+                g2d.drawImage(deadGhostInky, locInky.col * BLOCK_SIZE, locInky.row * BLOCK_SIZE, this);
+            } else{
+                g2d.drawImage(ghostInky, locInky.col * BLOCK_SIZE, locInky.row * BLOCK_SIZE, this);
+            }
         }
         
     }
