@@ -48,6 +48,10 @@ public class GUI extends JPanel implements ActionListener {
     private Image pacmanImage;
     private Image scaredGhost;
     private Image deadGhost;
+    private Image energizer1;
+    private Image energizer2;
+    private Image energizer3;
+    private Image energizer4;
 
     private final short levelData[][] = {
         { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
@@ -321,6 +325,10 @@ public class GUI extends JPanel implements ActionListener {
         pacmanImage = new ImageIcon(filePath + "pacman.png").getImage();
         scaredGhost = new ImageIcon(filePath + "scaredGhost.png").getImage();
         deadGhost = new ImageIcon(filePath + "deadGhost.png").getImage();
+        energizer1 = new ImageIcon(filePath + "energizers.png").getImage();
+        energizer2 = new ImageIcon(filePath + "energizers.png").getImage();
+        energizer3 = new ImageIcon(filePath + "energizers.png").getImage();
+        energizer4 = new ImageIcon(filePath + "energizers.png").getImage();
     }
 
     @Override
