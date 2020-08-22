@@ -4,6 +4,7 @@ import edu.rpi.cs.csci4963.su20.dzm.pacman.Pacman;
 
 /**
  * Class for the Inky (blue) ghost
+ * @author Dylan Ross
  */
 public class Inky extends Ghost {
 

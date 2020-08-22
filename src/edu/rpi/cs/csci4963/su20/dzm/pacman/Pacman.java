@@ -15,6 +15,10 @@ import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Inky;
 import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Pinky;
 import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Point;
 
+/**
+ * Main class for Pacman game
+ * @author Li ZhangCheng
+ */
 public class Pacman {
 
     /**

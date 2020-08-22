@@ -4,6 +4,7 @@ import edu.rpi.cs.csci4963.su20.dzm.pacman.Pacman;
 
 /**
  * Class for Pinky (pink) ghost
+ * @author Dylan Ross
  */
 public class Pinky extends Ghost {
 

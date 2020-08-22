@@ -21,6 +21,10 @@ import javax.swing.Timer;
 
 import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Point;
 
+/**
+ * Main class for the Pacman GUI
+ * @author Margot Rajkovic
+ */
 public class GUI extends JPanel implements ActionListener {
 
     private Dimension d;

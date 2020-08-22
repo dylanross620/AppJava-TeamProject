@@ -8,6 +8,7 @@ import edu.rpi.cs.csci4963.su20.dzm.pacman.Tile;
 
 /**
  * Abstract Ghost super class. Contains most of the ghost logic
+ * @author Dylan Ross
  */
 public abstract class Ghost {
 
