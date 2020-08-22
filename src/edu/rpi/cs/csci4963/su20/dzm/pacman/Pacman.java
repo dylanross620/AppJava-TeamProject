@@ -357,7 +357,7 @@ public class Pacman {
         //Move ghosts
         for (Ghost g : ghosts) {
             //Check for collision before ghost moves
-            if (g.getPosition().equals(location)) {
+            if (g.getPosition().equals(location) && !g.getIsDead()){
                 if (g.getMode() == GhostMode.FRIGHTENED)
                     g.die();
                 else
@@ -367,7 +367,7 @@ public class Pacman {
             g.tick();
 
             //Check for collision after ghost moves. Checking twice prevents player passing through a ghost 
-            if (g.getPosition().equals(location)) {
+            if (g.getPosition().equals(location) && !g.getIsDead()) {
                 if (g.getMode() == GhostMode.FRIGHTENED)
                     g.die();
                 else
