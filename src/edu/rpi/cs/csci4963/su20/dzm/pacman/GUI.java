@@ -21,10 +21,6 @@ import javax.swing.Timer;
 
 import edu.rpi.cs.csci4963.su20.dzm.pacman.game.Point;
 
-/**
- * Main class for the Pacman GUI
- * @author Margot Rajkovic
- */
 public class GUI extends JPanel implements ActionListener {
 
     private Dimension d;
@@ -48,7 +44,10 @@ public class GUI extends JPanel implements ActionListener {
     private Image ghostInky;
     private Image ghostClyde;
     private Image pacmanImage;
-    private Image scaredGhost;
+    private Image scaredGhostBlinky;
+    private Image scaredGhostPinky;
+    private Image scaredGhostClyde;
+    private Image scaredGhostInky;
 
     private final short levelData[][] = {
         { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
@@ -173,15 +172,43 @@ public class GUI extends JPanel implements ActionListener {
     * @param g2d Graphics2D
     */ 
     private void drawGhost(Graphics2D g2d) {
-        Point locBlinky = Pacman.getBlinky().getPosition();
-        Point locPinky = Pacman.getPinky().getPosition();
-        Point locClyde = Pacman.getClyde().getPosition();
-        Point locInky = Pacman.getInky().getPosition();
-
-        g2d.drawImage(ghostBlinky, locBlinky.col * BLOCK_SIZE, locBlinky.row * BLOCK_SIZE, this);
-        g2d.drawImage(ghostPinky, locPinky.col * BLOCK_SIZE, locPinky.row * BLOCK_SIZE, this);
-        g2d.drawImage(ghostClyde, locClyde.col * BLOCK_SIZE, locClyde.row * BLOCK_SIZE, this);
-        g2d.drawImage(ghostInky, locInky.col * BLOCK_SIZE, locInky.row * BLOCK_SIZE, this);
+        Point locBlinky = Pacman.getBlinkyPos();
+        Point locPinky = Pacman.getPinkyPos();
+        Point locClyde = Pacman.getClydePos();
+        Point locInky = Pacman.getInkyPos();
+        
+        if(Pacman.getBlinky().getMode() == GhostMode.FRIGHTENED && Pacman.getPinky().getMode() == GhostMode.FRIGHTENED && Pacman.getClyde().getMode() == GhostMode.FRIGHTENED && Pacman.getInky().getMode() == GhostMode.FRIGHTENED){
+            ghostBlinky.setVisible(false);
+            ghostPinky.setVisible(false);
+            ghostClyde.setVisible(false);
+            ghostInky.setVisible(false);
+            
+            scaredGhostBlinky.setVisible(true);
+            scaredGhostPinky.setVisible(true);
+            scaredGhostClyde.setVisible(true);
+            scaredGhostInky.setVisible(true);
+            
+            g2d.drawImage(scaredGhostBlinky, locBlinky.col * BLOCK_SIZE, locBlinky.row * BLOCK_SIZE, this);
+            g2d.drawImage(scaredGhostPinky, locPinky.col * BLOCK_SIZE, locPinky.row * BLOCK_SIZE, this);
+            g2d.drawImage(scaredGhostClyde, locClyde.col * BLOCK_SIZE, locClyde.row * BLOCK_SIZE, this);
+            g2d.drawImage(scaredGhostInky, locInky.col * BLOCK_SIZE, locInky.row * BLOCK_SIZE, this);
+        } else{
+            ghostBlinky.setVisible(true);
+            ghostPinky.setVisible(true);
+            ghostClyde.setVisible(true);
+            ghostInky.setVisible(true);
+            
+            scaredGhostBlinky.setVisible(false);
+            scaredGhostPinky.setVisible(false);
+            scaredGhostClyde.setVisible(false);
+            scaredGhostInky.setVisible(false);
+            
+            g2d.drawImage(ghostBlinky, locBlinky.col * BLOCK_SIZE, locBlinky.row * BLOCK_SIZE, this);
+            g2d.drawImage(ghostPinky, locPinky.col * BLOCK_SIZE, locPinky.row * BLOCK_SIZE, this);
+            g2d.drawImage(ghostClyde, locClyde.col * BLOCK_SIZE, locClyde.row * BLOCK_SIZE, this);
+            g2d.drawImage(ghostInky, locInky.col * BLOCK_SIZE, locInky.row * BLOCK_SIZE, this);
+        }
+        
     }
     
 
@@ -288,7 +315,10 @@ public class GUI extends JPanel implements ActionListener {
         ghostInky = new ImageIcon(filePath + "inky.png").getImage();
         ghostClyde = new ImageIcon(filePath + "clyde.png").getImage();
         pacmanImage = new ImageIcon(filePath + "pacman.png").getImage();
-        scaredGhost = new ImageIcon(filePath + "scaredGhost.png").getImage();
+        scaredGhostBlinky = new ImageIcon(filePath + "scaredGhost.png").getImage();
+        scaredGhostPinky = new ImageIcon(filePath + "scaredGhost.png").getImage();
+        scaredGhostClyde = new ImageIcon(filePath + "scaredGhost.png").getImage();
+        scaredGhostInky = new ImageIcon(filePath + "scaredGhost.png").getImage();
     }
 
     @Override
