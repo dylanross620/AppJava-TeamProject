@@ -81,21 +81,6 @@ public class Pacman {
     public static Point getPinkyPos() {
         return pinky.getPosition();
     }
-    
-    /**
-     * Sets a target tile in the board to a specified type.
-     * Useful for pacman since every tile he leaves should become empty. Does nothing if target tile is out
-     * of bounds.
-     * @param row the row of the target tile
-     * @param col the column of the target tile
-     * @param newTile the new type for the target tile
-     */
-    private static void setBoardPos(int row, int col, Tile newTile) {
-        if (row < 0 || row >= board.length || col < 0 || col >= board[0].length)
-            return;
-        
-        board[row][col] = newTile;
-    }
 
     /**
      * Gets the tile value for a target position in the board. Out of bounds accesses returns a wall.
@@ -335,6 +320,7 @@ public class Pacman {
         }
 
         location = new Point(27,14);
+        direction = Point.UP;
         for (Ghost g : ghosts)
             g.reset();
     }
