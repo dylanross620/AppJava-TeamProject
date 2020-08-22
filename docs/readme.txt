@@ -2,7 +2,7 @@ Application Programming in Java
 Group Project
 Dylan Ross
 Margot Rajkovic
-Li Zhangcheng
+Zhangcheng Li
 
 The project is structured as follows (relative to the parent directory of this file):
 	/bin contains the compiled .class files
