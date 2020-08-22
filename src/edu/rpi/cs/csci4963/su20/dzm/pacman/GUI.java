@@ -173,10 +173,10 @@ public class GUI extends JPanel implements ActionListener {
     * @param g2d Graphics2D
     */ 
     private void drawGhost(Graphics2D g2d) {
-        Point locBlinky = Pacman.getBlinkyPos();
-        Point locPinky = Pacman.getPinkyPos();
-        Point locClyde = Pacman.getClydePos();
-        Point locInky = Pacman.getInkyPos();
+        Point locBlinky = Pacman.getBlinky().getPosition();
+        Point locPinky = Pacman.getPinky().getPosition();
+        Point locClyde = Pacman.getClyde().getPosition();
+        Point locInky = Pacman.getInky().getPosition();
 
         g2d.drawImage(ghostBlinky, locBlinky.col * BLOCK_SIZE, locBlinky.row * BLOCK_SIZE, this);
         g2d.drawImage(ghostPinky, locPinky.col * BLOCK_SIZE, locPinky.row * BLOCK_SIZE, this);

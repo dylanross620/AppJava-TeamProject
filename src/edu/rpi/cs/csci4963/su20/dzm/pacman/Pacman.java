@@ -54,35 +54,35 @@ public class Pacman {
     private static int curModeCount, curModeIndex, frightenedCount;
 
     /**
-     * Get blinky's location
-     * @return the location of blinky
+     * Get blinky instance
+     * @return the instance of blinky
      */
-    public static Point getBlinkyPos() {
-        return blinky.getPosition();
+    public static Ghost getBlinky() {
+        return blinky;
     }
 
     /**
-     * Get clyde's location
-     * @return the location of clyde
+     * Get clyde instance
+     * @return the instance of clyde
      */
-    public static Point getClydePos() {
-        return clyde.getPosition();
+    public static Ghost getClyde() {
+        return clyde;
     }
 
     /**
-     * Get inky's location
-     * @return the location of inky
+     * Get inky instance
+     * @return the instance of inky
      */
-    public static Point getInkyPos() {
-        return inky.getPosition();
+    public static Ghost getInky() {
+        return inky;
     }
 
     /**
-     * Get pinky's location
-     * @return the location of pinky
+     * Get pinky instance
+     * @return the instance of pinky
      */
-    public static Point getPinkyPos() {
-        return pinky.getPosition();
+    public static Ghost getPinky() {
+        return pinky;
     }
 
     /**
