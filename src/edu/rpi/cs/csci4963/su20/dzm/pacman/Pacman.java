@@ -205,7 +205,12 @@ public class Pacman {
         //Remove what we just ate from the board
         board[x][y] = Tile.EMPTY;
 
-    	scores += gainedScore;
+        scores += gainedScore;
+        
+        //Check if player won
+        if (scores >= MAX_SCORE)
+            running = false;
+
     	return gainedScore;
     }
 
