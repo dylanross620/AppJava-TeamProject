@@ -29,7 +29,6 @@ public class Pacman {
 	private static final int MOVE_GAP = 5;
 	private static int energizedCounter = 0;
     private static int scores = 0;
-    private static int numLives;
   	private static Tile[][] board;
   	private static Point direction;
    	private static Point location;
@@ -260,14 +259,6 @@ public class Pacman {
     }
 
     /**
-     * Get the number of lives the player has remaining
-     * @return the number of lives for the player
-     */
-    public static int getNumLives() {
-        return numLives;
-    }
-
-    /**
      * Set the player to move in a specified direction.
      * The direction should be one of the constant points defined in the Point class
      * @param dir the new direction for the player
@@ -313,12 +304,10 @@ public class Pacman {
         curModeIndex = 0;
         curModeCount = 0;
         frightenedCount = -1;
-
-        numLives = 3;
     }
 
     private static void playerDeath() {
-        if (--numLives <= 0) {
+        if (--pacsLeft<= 0) {
             //Stop the game
             running = false;
             return;
@@ -366,10 +355,8 @@ public class Pacman {
             if (g.getPosition().equals(location)) {
                 if (g.getMode() == GhostMode.FRIGHTENED)
                     g.die();
-                else{
-		    pacsLeft--;
+                else
                     playerDeath();
-		}
             }
 
             g.tick();
@@ -378,10 +365,8 @@ public class Pacman {
             if (g.getPosition().equals(location)) {
                 if (g.getMode() == GhostMode.FRIGHTENED)
                     g.die();
-                else{
-		    pacsLeft--;
+                else
                     playerDeath();
-		}
             }
         }
 
