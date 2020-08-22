@@ -46,14 +46,8 @@ public class GUI extends JPanel implements ActionListener {
     private Image ghostInky;
     private Image ghostClyde;
     private Image pacmanImage;
-    private Image scaredGhostBlinky;
-    private Image scaredGhostPinky;
-    private Image scaredGhostClyde;
-    private Image scaredGhostInky;
-    private Image deadGhostBlinky;
-    private Image deadGhostPinky;
-    private Image deadGhostClyde;
-    private Image deadGhostInky;
+    private Image scaredGhost;
+    private Image deadGhost;
 
     private final short levelData[][] = {
         { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
@@ -182,35 +176,43 @@ public class GUI extends JPanel implements ActionListener {
         Point locPinky = Pacman.getPinky().getPosition();
         Point locClyde = Pacman.getClyde().getPosition();
         Point locInky = Pacman.getInky().getPosition();
+
+        Image blinkyImage;
+        if (Pacman.getBlinky().getIsDead())
+            blinkyImage = deadGhost;
+        else if (Pacman.getBlinky().getMode() == GhostMode.FRIGHTENED)
+            blinkyImage = scaredGhost;
+        else
+            blinkyImage = ghostBlinky;
         
-        if(Pacman.getBlinky().getMode() == GhostMode.FRIGHTENED && Pacman.getPinky().getMode() == GhostMode.FRIGHTENED && Pacman.getClyde().getMode() == GhostMode.FRIGHTENED && Pacman.getInky().getMode() == GhostMode.FRIGHTENED){
-            g2d.drawImage(scaredGhostBlinky, locBlinky.col * BLOCK_SIZE, locBlinky.row * BLOCK_SIZE, this);
-            g2d.drawImage(scaredGhostPinky, locPinky.col * BLOCK_SIZE, locPinky.row * BLOCK_SIZE, this);
-            g2d.drawImage(scaredGhostClyde, locClyde.col * BLOCK_SIZE, locClyde.row * BLOCK_SIZE, this);
-            g2d.drawImage(scaredGhostInky, locInky.col * BLOCK_SIZE, locInky.row * BLOCK_SIZE, this);
-        } else{
-            if(Pacman.getBlinky()).getIsDead()){
-                g2d.drawImage(deadGhostBlinky, locBlinky.col * BLOCK_SIZE, locBlinky.row * BLOCK_SIZE, this);
-            } else{
-                g2d.drawImage(ghostBlinky, locBlinky.col * BLOCK_SIZE, locBlinky.row * BLOCK_SIZE, this);
-            }
-            if(Pacman.getPinky()).getIsDead()){
-                g2d.drawImage(deadGhostPinky, locPinky.col * BLOCK_SIZE, locPinky.row * BLOCK_SIZE, this);
-            } else{
-                g2d.drawImage(ghostPinky, locPinky.col * BLOCK_SIZE, locPinky.row * BLOCK_SIZE, this);
-            }
-            if(Pacman.getClyde()).getIsDead()){
-                g2d.drawImage(deadGhostClyde, locClyde.col * BLOCK_SIZE, locClyde.row * BLOCK_SIZE, this);
-            } else{
-                g2d.drawImage(ghostClyde, locClyde.col * BLOCK_SIZE, locClyde.row * BLOCK_SIZE, this);
-            }
-            if(Pacman.getInky().getIsDead()){
-                g2d.drawImage(deadGhostInky, locInky.col * BLOCK_SIZE, locInky.row * BLOCK_SIZE, this);
-            } else{
-                g2d.drawImage(ghostInky, locInky.col * BLOCK_SIZE, locInky.row * BLOCK_SIZE, this);
-            }
-        }
+        Image pinkyImage;
+        if (Pacman.getPinky().getIsDead())
+            pinkyImage = deadGhost;
+        else if (Pacman.getPinky().getMode() == GhostMode.FRIGHTENED)
+            pinkyImage = scaredGhost;
+        else
+            pinkyImage = ghostPinky;
         
+        Image clydeImage;
+        if (Pacman.getClyde().getIsDead())
+            clydeImage = deadGhost;
+        else if (Pacman.getClyde().getMode() == GhostMode.FRIGHTENED)
+            clydeImage = scaredGhost;
+        else
+            clydeImage = ghostClyde;
+
+        Image inkyImage;
+        if (Pacman.getInky().getIsDead())
+            inkyImage = deadGhost;
+        else if (Pacman.getInky().getMode() == GhostMode.FRIGHTENED)
+            inkyImage = scaredGhost;
+        else
+            inkyImage = ghostInky;
+        
+        g2d.drawImage(blinkyImage, locBlinky.col * BLOCK_SIZE, locBlinky.row * BLOCK_SIZE, this);
+        g2d.drawImage(pinkyImage, locPinky.col * BLOCK_SIZE, locPinky.row * BLOCK_SIZE, this);
+        g2d.drawImage(clydeImage, locClyde.col * BLOCK_SIZE, locClyde.row * BLOCK_SIZE, this);
+        g2d.drawImage(inkyImage, locInky.col * BLOCK_SIZE, locInky.row * BLOCK_SIZE, this);
     }
     
 
@@ -317,10 +319,8 @@ public class GUI extends JPanel implements ActionListener {
         ghostInky = new ImageIcon(filePath + "inky.png").getImage();
         ghostClyde = new ImageIcon(filePath + "clyde.png").getImage();
         pacmanImage = new ImageIcon(filePath + "pacman.png").getImage();
-        scaredGhostBlinky = new ImageIcon(filePath + "scaredGhost.png").getImage();
-        scaredGhostPinky = new ImageIcon(filePath + "scaredGhost.png").getImage();
-        scaredGhostClyde = new ImageIcon(filePath + "scaredGhost.png").getImage();
-        scaredGhostInky = new ImageIcon(filePath + "scaredGhost.png").getImage();
+        scaredGhost = new ImageIcon(filePath + "scaredGhost.png").getImage();
+        deadGhost = new ImageIcon(filePath + "deadGhost.png").getImage();
     }
 
     @Override
